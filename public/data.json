@@ -1,0 +1,41 @@
+{
+"nodes": [
+    {
+    "id": 1,
+    "fullName": "David Stirling",
+    "year": 2028,
+    "skills": {
+        "skill1": "UX/UI",
+        "skill2": "Product",
+        "skill3": "Frontend"
+    },
+    "website": "https://davidstirling.me/",
+    "bio": "basketball, books, music & movies"
+    },
+    {
+    "id": 2,
+    "fullName": "Yousuf Zia",
+    "year": 2026,
+    "skills": {
+        "skill1": "UX/UI",
+        "skill2": "UXR",
+        "skill3": ""
+    },
+    "website": "https://www.yousufzia.co/",
+    "bio": "I actually hate research"
+    },
+    {
+    "id": 3,
+    "fullName": "Eric Martin",
+    "year": 2028,
+    "skills": {
+        "skill1": "Frontend",
+        "skill2": "Backend",
+        "skill3": "UX/UI"
+    },
+    "website": "https://ericm.ca/",
+    "bio": "I love my kobo & modern family"
+    }
+],
+"links": []
+}
