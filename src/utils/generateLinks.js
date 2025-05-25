@@ -5,9 +5,13 @@ for (let i = 0; i < nodes.length; i++) {
     for (let j = i + 1; j < nodes.length; j++) {
     const skillsA = Object.values(nodes[i].skills || {});
     const skillsB = Object.values(nodes[j].skills || {});
-    const matchCount = skillsA.filter(skill => skillsB.includes(skill)).length;
+    let matchCount = skillsA.filter(skill => skillsB.includes(skill)).length;
 
-    if (matchCount >= 2) {
+    if (nodes[i].year === nodes[j].year) {
+        matchCount += 1; // Add 1 for year match
+    }
+
+    if (matchCount >= 1) {
         links.push({ source: nodes[i].id, target: nodes[j].id, value: matchCount });
     }
     }

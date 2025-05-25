@@ -3,6 +3,8 @@ import ForceGraph3D from 'react-force-graph-3d';
 import { generateLinks } from './utils/generateLinks';
 import Sidebar from './components/Sidebar';
 import NodeForm from './components/NodeForm';
+import * as THREE from 'three';
+
 
 function App() {
     const fgRef = useRef();
@@ -46,12 +48,38 @@ function App() {
 
   return (
     <div className="App">
+      <div>
+        {console.log(graphData.links)}
+      </div>
       <ForceGraph3D
         ref={fgRef}
         graphData={graphData}
-        nodeAutoColorBy="year"
+        backgroundColor='#161616'
+        // backgroundColor='#f0f0f0'
+        // nodeColor={() => '#868686'}
+        // nodeAutoColorBy="year"
         nodeLabel="fullName"
+        nodeOpacity={1}
+
+        nodeThreeObject={node => {
+            const sphereGeometry = new THREE.SphereGeometry(2, 32, 32); // radius, widthSegs, heightSegs
+            const sphereMaterial = new THREE.MeshToonMaterial({
+              color: new THREE.Color('#868686'),
+              roughness: 0.4,
+              metalness: 0.1
+            });
+            return new THREE.Mesh(sphereGeometry, sphereMaterial);
+          }}
+
         onNodeClick={handleNodeClick}
+        linkWidth={0.5}
+        linkColor={() => '#555555'} // fixed color for all links
+        linkOpacity={link => {
+          if (link.value > 3) return 1;
+          if (link.value >= 2) return 0.3;
+          if (link.value >= 1) return 0.1;
+          else return 0; // fallback for unlinked (optional)
+        }}
       />
       {selectedNode && <Sidebar node={selectedNode} />}
       <NodeForm onNewNode={handleNewNode} />
