@@ -8,7 +8,8 @@ const NodeForm = ({onNewNode}) => {
         year: '',
         portfolio: '',
         bio: '',
-        skills: { primary: '', secondary: '', tertiary: '' }
+        skills: { primary: '', secondary: '', tertiary: '' },
+        color: '',
     });
 
     const handleChange = (e) => {
