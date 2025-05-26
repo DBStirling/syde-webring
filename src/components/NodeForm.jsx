@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import skillOptions from '../data/skillOptions';
+import skillOptions from '../data/skillOptions.js';
+
+const allSkills = skillOptions.flatMap(category => category.skills);
+console.log(allSkills); // This will log all skills in a flat array
 
 const NodeForm = ({onNewNode}) => {
     const [formData, setFormData] = useState({
@@ -25,23 +28,6 @@ const NodeForm = ({onNewNode}) => {
             setFormData({ ...formData, [name]: value });
         }
     };
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     onNewNode(formData);
-    //     setFormData({ 
-    //         id: '', 
-    //         fullName: '', 
-    //         year: '', 
-    //         portfolio: '', 
-    //         bio: '', 
-    //         skills: { 
-    //             primary: '', 
-    //             secondary: '', 
-    //             tertiary: '' 
-    //         } 
-    //     });
-    // };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -74,7 +60,7 @@ const NodeForm = ({onNewNode}) => {
 
 
     const getFilteredOptions = (excludeList) => {
-        return skillOptions.filter(skill => !excludeList.includes(skill));
+        return allSkills.filter(skill => !excludeList.includes(skill));
     };
 
     return (
@@ -114,7 +100,10 @@ const NodeForm = ({onNewNode}) => {
             required
         >
             <option value="">Select Primary Skill</option>
-            {getFilteredOptions([formData.skills.secondary, formData.skills.tertiary]).map(skill => (
+            {/* {allSkills.map(skill => (
+                <option key={skill} value={skill}>{skill}</option>
+            ))} */}
+                        {getFilteredOptions([formData.skills.secondary, formData.skills.tertiary]).map(skill => (
             <option key={skill} value={skill}>{skill}</option>
             ))}
         </select>
@@ -124,6 +113,9 @@ const NodeForm = ({onNewNode}) => {
             onChange={handleChange}
         >
             <option value="">Select Secondary Skill</option>
+            {/* {allSkills.map(skill => (
+                <option key={skill} value={skill}>{skill}</option>
+            ))} */}
             {getFilteredOptions([formData.skills.primary, formData.skills.tertiary]).map(skill => (
             <option key={skill} value={skill}>{skill}</option>
             ))}
@@ -134,6 +126,9 @@ const NodeForm = ({onNewNode}) => {
             onChange={handleChange}
         >
             <option value="">Select Tertiary Skill</option>
+            {/* {allSkills.map(skill => (
+                <option key={skill} value={skill}>{skill}</option>
+            ))} */}
             {getFilteredOptions([formData.skills.primary, formData.skills.secondary]).map(skill => (
             <option key={skill} value={skill}>{skill}</option>
             ))}
