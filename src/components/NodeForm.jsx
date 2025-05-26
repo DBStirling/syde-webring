@@ -54,7 +54,8 @@ const NodeForm = ({onNewNode}) => {
             year: '',
             portfolio: '',
             bio: '',
-            skills: { primary: '', secondary: '', tertiary: '' }
+            skills: { primary: '', secondary: '', tertiary: '' },
+            color: ''
         });
     };
 
@@ -100,12 +101,11 @@ const NodeForm = ({onNewNode}) => {
             required
         >
             <option value="">Select Primary Skill</option>
-            {/* {allSkills.map(skill => (
+            {getFilteredOptions([formData.skills.secondary, formData.skills.tertiary]).map(skill => (
                 <option key={skill} value={skill}>{skill}</option>
-            ))} */}
-                        {getFilteredOptions([formData.skills.secondary, formData.skills.tertiary]).map(skill => (
-            <option key={skill} value={skill}>{skill}</option>
             ))}
+            {formData.color = skillOptions.find(category => category.skills.includes(formData.skills.primary))?.color || ''}
+            {console.log(formData.color)}
         </select>
         <select
             name="secondary"
@@ -113,11 +113,8 @@ const NodeForm = ({onNewNode}) => {
             onChange={handleChange}
         >
             <option value="">Select Secondary Skill</option>
-            {/* {allSkills.map(skill => (
-                <option key={skill} value={skill}>{skill}</option>
-            ))} */}
             {getFilteredOptions([formData.skills.primary, formData.skills.tertiary]).map(skill => (
-            <option key={skill} value={skill}>{skill}</option>
+                <option key={skill} value={skill}>{skill}</option>
             ))}
         </select>
         <select
@@ -126,11 +123,8 @@ const NodeForm = ({onNewNode}) => {
             onChange={handleChange}
         >
             <option value="">Select Tertiary Skill</option>
-            {/* {allSkills.map(skill => (
-                <option key={skill} value={skill}>{skill}</option>
-            ))} */}
             {getFilteredOptions([formData.skills.primary, formData.skills.secondary]).map(skill => (
-            <option key={skill} value={skill}>{skill}</option>
+                <option key={skill} value={skill}>{skill}</option>
             ))}
         </select>
         <button type="submit">Add Node</button>
