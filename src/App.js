@@ -6,6 +6,7 @@ import Sidebar from './components/Sidebar';
 import HoverCard from './components/HoverCard';
 import NodeForm from './components/NodeForm';
 import SearchBar from './components/SearchBar';
+import SkillFilter from './components/SkillFilter';
 import * as THREE from 'three';
 
 
@@ -18,6 +19,9 @@ function App() {
     const [isNodeFormOpen, setIsNodeFormOpen] = useState(false);
     const [filteredGraphData, setFilteredGraphData] = useState({ nodes: [], links: [] });
     const [searchQuery, setSearchQuery] = useState('');
+    const [skillFilters, setSkillFilters] = useState([]);
+    const [filtersVisible, setFiltersVisible] = useState(false);
+
 
     const handleClearLocalStorage = () => {
       const confirmed = window.confirm("Are you sure you want to clear all nodes? This cannot be undone.");
@@ -58,27 +62,40 @@ function App() {
     // });
 
     useEffect(() => {
-      if (!searchQuery.trim()) {
-        setFilteredGraphData(graphData);
-        return;
+      // Base case: no filters = show everything
+      const noSearch = !searchQuery.trim();
+      const noSkills = skillFilters.length === 0;
+
+      // Filter nodes by search
+      let nodes = graphData.nodes;
+      if (!noSearch) {
+        nodes = nodes.filter(node =>
+          node.fullName.toLowerCase().includes(searchQuery.toLowerCase())
+        );
       }
 
-      const filteredNodes = graphData.nodes.filter(node =>
-        node.fullName.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      // Filter nodes by skill match (inclusive)
+      if (!noSkills) {
+        nodes = nodes.filter(node => {
+          const nodeSkills = Object.values(node.skills || {});
+          return skillFilters.some(filter => nodeSkills.includes(filter));
+        });
+      }
 
-      const filteredLinks = graphData.links.filter(link => {
+      // Filter links to only those connecting visible nodes
+      const links = graphData.links.filter(link => {
         const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
         const targetId = typeof link.target === 'object' ? link.target.id : link.target;
 
         return (
-          filteredNodes.some(n => n.id === sourceId) &&
-          filteredNodes.some(n => n.id === targetId)
+          nodes.some(n => n.id === sourceId) &&
+          nodes.some(n => n.id === targetId)
         );
       });
 
-      setFilteredGraphData({ nodes: filteredNodes, links: filteredLinks });
-    }, [searchQuery, graphData]);
+      setFilteredGraphData({ nodes, links });
+    }, [searchQuery, skillFilters, graphData]);
+
 
 
     useEffect(() => {
@@ -175,7 +192,17 @@ function App() {
           Clear Data
         </button>
       </div>
-      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <SearchBar 
+        searchQuery={searchQuery} 
+        setSearchQuery={setSearchQuery} 
+        toggleFilterUI={() => setFiltersVisible(prev => !prev)}
+      />
+      {filtersVisible && (
+      <SkillFilter 
+        skillFilters={skillFilters} 
+        setSkillFilters={setSkillFilters} 
+      />
+      )}
       <div className="w-screen h-screen">
         <ForceGraph3D
         // important stuff
@@ -224,8 +251,15 @@ function App() {
         />
       </div>
       {selectedNode && 
-      <Sidebar node={selectedNode} onClose={() => setSelectedNode(null)} />}
-      <HoverCard node={hoveredNode} pos={hoverPos} />
+        <Sidebar 
+          node={selectedNode} 
+          onClose={() => setSelectedNode(null)} 
+        />
+      }
+      <HoverCard 
+        node={hoveredNode} 
+        pos={hoverPos} 
+      />
       {/* <NodeForm onNewNode={handleNewNode} /> */}
       {isNodeFormOpen && (
         <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center">
