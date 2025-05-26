@@ -14,6 +14,7 @@ function App() {
     const [selectedNode, setSelectedNode] = useState(null);
     const [hoveredNode, setHoveredNode] = useState(null);
     const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
+    const [isNodeFormOpen, setIsNodeFormOpen] = useState(false);
 
     const handleClearLocalStorage = () => {
       const confirmed = window.confirm("Are you sure you want to clear all nodes? This cannot be undone.");
@@ -104,7 +105,13 @@ function App() {
 
   return (
     <div className="App">
-      <div className="fixed bottom-4 right-4 z-50 flex gap-3">
+      <div className="fixed bottom-4 right-4 z-40 flex gap-3">
+        <button
+          onClick={() => setIsNodeFormOpen(true)}
+          className="bg-[#333] text-white px-4 py-2 rounded shadow hover:bg-[#444]"
+        >
+          Add Node +
+        </button>
         <button
           onClick={handleResetCamera}
           className="bg-[#333] text-white px-4 py-2 rounded shadow hover:bg-[#444]"
@@ -176,7 +183,23 @@ function App() {
       {selectedNode && 
       <Sidebar node={selectedNode} onClose={() => setSelectedNode(null)} />}
       <HoverCard node={hoveredNode} pos={hoverPos} />
-      <NodeForm onNewNode={handleNewNode} />
+      {/* <NodeForm onNewNode={handleNewNode} /> */}
+      {isNodeFormOpen && (
+        <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center">
+          <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-2xl w-full max-w-md">
+            <div className="flex justify-end">
+              <button
+                onClick={() => setIsNodeFormOpen(false)}
+                className="text-[#868686] hover:text-white text-[30px] font-light leading-none"
+                aria-label="Close"
+              >
+              &times;
+              </button>
+            </div>
+            <NodeForm onNewNode={handleNewNode} onClose={() => setIsNodeFormOpen(false)}/>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -8,7 +8,7 @@ const Sidebar = ({ node, onClose }) => {
     if (!node) return null;
 
     return (
-        <div className="fixed top-0 right-0 w-[40vw] max-w-[600px] h-screen z-49 bg-[#161616] border-l border-[#333333] overflow-y-auto">
+        <div className="fixed top-0 right-0 w-[40vw] max-w-[600px] h-screen z-39 bg-[#161616] border-l border-[#333333] overflow-y-auto">
         <div className="relative">
             {/* Optional: design background element */}
             <div className="relative py-[120px] flex flex-col gap-10">
@@ -73,7 +73,7 @@ const Sidebar = ({ node, onClose }) => {
         {/* Close button (optional) */}
         <button
             onClick={onClose}
-            className="absolute top-4 right-4 text-[#868686] hover:text-white text-[30px] font-light"
+            className="absolute top-4 right-4 text-[#868686] hover:text-white text-[30px] font-light leading-none"
             aria-label="Close"
             >
             &times;
