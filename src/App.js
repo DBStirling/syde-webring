@@ -173,7 +173,8 @@ function App() {
           }}
         />
       </div>
-      {selectedNode && <Sidebar node={selectedNode} />}
+      {selectedNode && 
+      <Sidebar node={selectedNode} onClose={() => setSelectedNode(null)} />}
       <HoverCard node={hoveredNode} pos={hoverPos} />
       <NodeForm onNewNode={handleNewNode} />
     </div>
