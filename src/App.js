@@ -14,8 +14,11 @@ function App() {
     const [selectedNode, setSelectedNode] = useState(null);
     const [hoveredNode, setHoveredNode] = useState(null);
     const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
-    
+
     const handleClearLocalStorage = () => {
+      const confirmed = window.confirm("Are you sure you want to clear all nodes? This cannot be undone.");
+      if (!confirmed) return;
+
       localStorage.removeItem('nodes');
       setGraphData({ nodes: [], links: [] });
       setSelectedNode(null);
@@ -65,6 +68,22 @@ function App() {
       );
     };
 
+    const handleLoadPreset = () => {
+      fetch('/data.json')
+        .then(res => res.json())
+        .then(data => {
+          const links = generateLinks(data.nodes);
+          setGraphData({ nodes: data.nodes, links });
+          localStorage.setItem('nodes', JSON.stringify(data.nodes));
+          setSelectedNode(null);
+          setHoveredNode(null);
+        })
+        .catch(err => {
+          console.error("Failed to load preset data:", err);
+          alert("Failed to load preset data.");
+        });
+    };
+
   return (
     <div className="App">
       <div className="fixed bottom-4 right-4 z-50 flex gap-3">
@@ -74,12 +93,17 @@ function App() {
         >
           Reset View
         </button>
-
         <button
           onClick={handleClearLocalStorage}
           className="bg-[#c92a2a] text-white px-4 py-2 rounded shadow hover:bg-[#a61e1e]"
         >
           Clear Data
+        </button>
+        <button
+          onClick={handleLoadPreset}
+          className="bg-[#333] text-white px-4 py-2 rounded shadow hover:bg-[#444]"
+        >
+          Load Preset
         </button>
       </div>
       <ForceGraph3D
