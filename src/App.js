@@ -66,7 +66,7 @@ function App() {
           if (node && fgRef.current) {
             const { camera, renderer } = fgRef.current;
             const coords = getScreenCoordinates(node, camera(), renderer());
-            setHoverPos({ x: coords.x + 12, y: coords.y });
+            setHoverPos({ x: coords.x + 24, y: coords.y });
           }
         }}
 
@@ -77,7 +77,7 @@ function App() {
         // backgroundColor='#f0f0f0'
         // nodeColor={() => '#868686'}
         // nodeAutoColorBy="year"
-        nodeLabel="fullName"
+        nodeLabel=""
         nodeOpacity={1}
         nodeThreeObject={node => {
             const sphereGeometry = new THREE.SphereGeometry(2, 32, 32); // radius, widthSegs, heightSegs
