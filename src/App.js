@@ -14,7 +14,13 @@ function App() {
     const [selectedNode, setSelectedNode] = useState(null);
     const [hoveredNode, setHoveredNode] = useState(null);
     const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
-
+    
+    const handleClearLocalStorage = () => {
+      localStorage.removeItem('nodes');
+      setGraphData({ nodes: [], links: [] });
+      setSelectedNode(null);
+      setHoveredNode(null);
+    };
     const handleResetCamera = () => {
       fgRef.current.cameraPosition(
         { x: 0, y: 0, z: 500 }, // New position
@@ -61,12 +67,21 @@ function App() {
 
   return (
     <div className="App">
-      <button
-        onClick={handleResetCamera}
-        className="fixed bottom-4 right-4 z-50 bg-[#333] text-white px-4 py-2 rounded shadow hover:bg-[#444]"
-      >
-        Reset View
-      </button>
+      <div className="fixed bottom-4 right-4 z-50 flex gap-3">
+        <button
+          onClick={handleResetCamera}
+          className="bg-[#333] text-white px-4 py-2 rounded shadow hover:bg-[#444]"
+        >
+          Reset View
+        </button>
+
+        <button
+          onClick={handleClearLocalStorage}
+          className="bg-[#c92a2a] text-white px-4 py-2 rounded shadow hover:bg-[#a61e1e]"
+        >
+          Clear Data
+        </button>
+      </div>
       <ForceGraph3D
       // important stuff
         ref={fgRef}
