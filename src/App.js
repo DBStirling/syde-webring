@@ -15,6 +15,14 @@ function App() {
     const [hoveredNode, setHoveredNode] = useState(null);
     const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
 
+    const handleResetCamera = () => {
+      fgRef.current.cameraPosition(
+        { x: 0, y: 0, z: 500 }, // New position
+        { x: 0, y: 0, z: 0 },   // Look-at position
+        3000                    // Transition duration (ms)
+      );
+    };
+
     useEffect(() => {
       const storedNodes = JSON.parse(localStorage.getItem('nodes'));
       if (storedNodes && storedNodes.length > 0) {
@@ -53,9 +61,12 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        {console.log(graphData.links)}
-      </div>
+      <button
+        onClick={handleResetCamera}
+        className="fixed bottom-4 right-4 z-50 bg-[#333] text-white px-4 py-2 rounded shadow hover:bg-[#444]"
+      >
+        Reset View
+      </button>
       <ForceGraph3D
       // important stuff
         ref={fgRef}
@@ -77,7 +88,7 @@ function App() {
         // backgroundColor='#f0f0f0'
         // nodeColor={() => '#868686'}
         // nodeAutoColorBy="year"
-        nodeLabel=""
+        nodeLabel="" // bun the label
         nodeOpacity={1}
         nodeThreeObject={node => {
             const sphereGeometry = new THREE.SphereGeometry(2, 32, 32); // radius, widthSegs, heightSegs
