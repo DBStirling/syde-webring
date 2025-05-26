@@ -32,7 +32,25 @@ function App() {
       );
     };
 
+    const [dimensions, setDimensions] = useState({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+
     useEffect(() => {
+      const handleResize = () => {
+        setDimensions({
+          width: window.innerWidth,
+          height: window.innerHeight
+        });
+      };
+
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+      
       const storedNodes = JSON.parse(localStorage.getItem('nodes'));
       if (storedNodes && storedNodes.length > 0) {
         const links = generateLinks(storedNodes);
@@ -93,63 +111,68 @@ function App() {
         >
           Reset View
         </button>
-        <button
-          onClick={handleClearLocalStorage}
-          className="bg-[#c92a2a] text-white px-4 py-2 rounded shadow hover:bg-[#a61e1e]"
-        >
-          Clear Data
-        </button>
+        
         <button
           onClick={handleLoadPreset}
           className="bg-[#333] text-white px-4 py-2 rounded shadow hover:bg-[#444]"
         >
           Load Preset
         </button>
+        <button
+          onClick={handleClearLocalStorage}
+          className="bg-[#c92a2a] text-white px-4 py-2 rounded shadow hover:bg-[#a61e1e]"
+        >
+          Clear Data
+        </button>
       </div>
-      <ForceGraph3D
-      // important stuff
-        ref={fgRef}
-        graphData={graphData}
-        onNodeHover={node => {
-          setHoveredNode(node);
+      <div className="w-screen h-screen">
+        <ForceGraph3D
+        // important stuff
+          ref={fgRef}
+          graphData={graphData}
+          onNodeHover={node => {
+            setHoveredNode(node);
 
-          if (node && fgRef.current) {
-            const { camera, renderer } = fgRef.current;
-            const coords = getScreenCoordinates(node, camera(), renderer());
-            setHoverPos({ x: coords.x + 24, y: coords.y });
-          }
-        }}
-
-      // background styling
-        backgroundColor='#161616'
-
-      // node styling
-        // backgroundColor='#f0f0f0'
-        // nodeColor={() => '#868686'}
-        // nodeAutoColorBy="year"
-        nodeLabel="" // bun the label
-        nodeOpacity={1}
-        nodeThreeObject={node => {
-            const sphereGeometry = new THREE.SphereGeometry(2, 32, 32); // radius, widthSegs, heightSegs
-            const sphereMaterial = new THREE.MeshToonMaterial({
-              color: new THREE.Color('#868686'),
-              roughness: 0.4,
-              metalness: 0.1
-            });
-            return new THREE.Mesh(sphereGeometry, sphereMaterial);
+            if (node && fgRef.current) {
+              const { camera, renderer } = fgRef.current;
+              const coords = getScreenCoordinates(node, camera(), renderer());
+              setHoverPos({ x: coords.x + 24, y: coords.y });
+            }
           }}
-        onNodeClick={handleNodeClick}
-      
-      // link styling
-        linkWidth={0.5}
-        linkColor={() => '#555555'} // fixed color for all links
-        linkOpacity={link => {
-          if (link.value > 3) return 1;
-          if (link.value >= 2) return 0.3;
-          if (link.value >= 1) return 0.1;
-          else return 0; // fallback for unlinked (optional)
-        }}
-      />
+
+        // background
+          width={dimensions.width}
+          height={dimensions.height}
+          backgroundColor='#161616'
+
+        // node styling
+          // backgroundColor='#f0f0f0'
+          // nodeColor={() => '#868686'}
+          // nodeAutoColorBy="year"
+          nodeLabel="" // bun the label
+          nodeOpacity={1}
+          nodeThreeObject={node => {
+              const sphereGeometry = new THREE.SphereGeometry(2, 32, 32); // radius, widthSegs, heightSegs
+              const sphereMaterial = new THREE.MeshToonMaterial({
+                color: new THREE.Color('#868686'),
+                roughness: 0.4,
+                metalness: 0.1
+              });
+              return new THREE.Mesh(sphereGeometry, sphereMaterial);
+            }}
+          onNodeClick={handleNodeClick}
+        
+        // link styling
+          linkWidth={0.5}
+          linkColor={() => '#555555'} // fixed color for all links
+          linkOpacity={link => {
+            if (link.value > 3) return 1;
+            if (link.value >= 2) return 0.3;
+            if (link.value >= 1) return 0.1;
+            else return 0; // fallback for unlinked (optional)
+          }}
+        />
+      </div>
       {selectedNode && <Sidebar node={selectedNode} />}
       <HoverCard node={hoveredNode} pos={hoverPos} />
       <NodeForm onNewNode={handleNewNode} />
