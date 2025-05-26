@@ -5,6 +5,7 @@ import { getScreenCoordinates } from './utils/flattenTo2d';
 import Sidebar from './components/Sidebar';
 import HoverCard from './components/HoverCard';
 import NodeForm from './components/NodeForm';
+import SearchBar from './components/SearchBar';
 import * as THREE from 'three';
 
 
@@ -15,6 +16,8 @@ function App() {
     const [hoveredNode, setHoveredNode] = useState(null);
     const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
     const [isNodeFormOpen, setIsNodeFormOpen] = useState(false);
+    const [filteredGraphData, setFilteredGraphData] = useState({ nodes: [], links: [] });
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleClearLocalStorage = () => {
       const confirmed = window.confirm("Are you sure you want to clear all nodes? This cannot be undone.");
@@ -37,6 +40,46 @@ function App() {
       width: window.innerWidth,
       height: window.innerHeight
     });
+
+    // const filteredNodes = searchQuery.trim()
+    //   ? graphData.nodes.filter(node =>
+    //       node.fullName.toLowerCase().includes(searchQuery.toLowerCase())
+    //     )
+    //   : graphData.nodes;
+
+    // const filteredLinks = graphData.links.filter(link => {
+    //   const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+    //   const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+
+    //   const sourceInFiltered = filteredNodes.some(n => n.id === sourceId);
+    //   const targetInFiltered = filteredNodes.some(n => n.id === targetId);
+
+    //   return sourceInFiltered && targetInFiltered;
+    // });
+
+    useEffect(() => {
+      if (!searchQuery.trim()) {
+        setFilteredGraphData(graphData);
+        return;
+      }
+
+      const filteredNodes = graphData.nodes.filter(node =>
+        node.fullName.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
+      const filteredLinks = graphData.links.filter(link => {
+        const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+        const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+
+        return (
+          filteredNodes.some(n => n.id === sourceId) &&
+          filteredNodes.some(n => n.id === targetId)
+        );
+      });
+
+      setFilteredGraphData({ nodes: filteredNodes, links: filteredLinks });
+    }, [searchQuery, graphData]);
+
 
     useEffect(() => {
       const handleResize = () => {
@@ -132,14 +175,14 @@ function App() {
           Clear Data
         </button>
       </div>
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <div className="w-screen h-screen">
         <ForceGraph3D
         // important stuff
           ref={fgRef}
-          graphData={graphData}
+          graphData={filteredGraphData}
           onNodeHover={node => {
             setHoveredNode(node);
-
             if (node && fgRef.current) {
               const { camera, renderer } = fgRef.current;
               const coords = getScreenCoordinates(node, camera(), renderer());

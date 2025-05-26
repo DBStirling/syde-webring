@@ -23,7 +23,7 @@ const Sidebar = ({ node, onClose }) => {
                     </div> 
             </div>
 
-            <div className="pl-[74px] flex flex-col gap-5 font-['Space_Grotesk']">
+            <div className="px-[74px] flex flex-col gap-5 font-['Space_Grotesk']">
                 {/* Website */}
                 {node.website && (
                 <div className="flex flex-col">
