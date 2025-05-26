@@ -2,7 +2,7 @@ const HoverCard = ({node, pos}) => {
     if (!node) return null;
 
     return (
-        <div className="hover-card" style={{
+        <div className="hover-card animate-float-in" style={{
             position: 'absolute',
             left: `${pos.x}px`,
             top: `${pos.y}px`,
