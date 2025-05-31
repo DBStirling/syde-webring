@@ -14,6 +14,7 @@ for (let i = 0; i < nodes.length; i++) {
     if (matchCount >= 1) {
         links.push({ source: nodes[i].id, target: nodes[j].id, value: matchCount });
     }
+        // console.log(matchCount)
     }
 }
 

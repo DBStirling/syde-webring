@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import ForceGraph3D from 'react-force-graph-3d';
 import { generateLinks } from './utils/generateLinks';
 import { getScreenCoordinates } from './utils/flattenTo2d';
-import { adjustSaturation } from './utils/adjustSaturation';
+// import { adjustSaturation } from './utils/adjustSaturation';
 import skillOptions from './data/skillOptions'; // adjust path if needed
 import Sidebar from './components/Sidebar';
 import HoverCard from './components/HoverCard';
@@ -17,6 +17,7 @@ function App() {
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
     const [selectedNode, setSelectedNode] = useState(null);
     const [hoveredNode, setHoveredNode] = useState(null);
+    const [draggedNode, setDraggedNode] = useState(null);
     const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
     const [isNodeFormOpen, setIsNodeFormOpen] = useState(false);
     const [filteredGraphData, setFilteredGraphData] = useState({ nodes: [], links: [] });
@@ -156,6 +157,11 @@ function App() {
       return group ? group.color : fallbackColor;
     };
 
+// console.log('Filtered nodes:', filteredGraphData.nodes.length);
+// console.log('Filtered links:', filteredGraphData.links.length);
+// console.log('Sample link:', filteredGraphData.links[0]);
+
+
   return (
     <div className="App">
       <div className="fixed bottom-4 right-4 z-40 flex gap-3">
@@ -219,20 +225,23 @@ function App() {
           nodeColor={null}
           nodeOpacity={1}
 
+          onNodeDrag={node => setDraggedNode(node)}
+          onNodeDragEnd={() => setDraggedNode(null)}
+
+
           nodeThreeObject={node => {
             const isHovered = hoveredNode?.id === node.id;
             const isSelected = selectedNode?.id === node.id;
+            const isDragged = draggedNode?.id === node.id;
             const primarySkill = node.skills?.skill1;
             
-            const color = (isHovered || isSelected)
+            const color = (isHovered || isSelected || isDragged)
               ? new THREE.Color(getSkillColor(primarySkill))
               : new THREE.Color(fallbackColor);
 
-            const sphereGeometry = new THREE.SphereGeometry(2, 32, 32);
+            const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
             const sphereMaterial = new THREE.MeshToonMaterial({
               color,
-              roughness: 0.4,
-              metalness: 0.1
             });
 
             return new THREE.Mesh(sphereGeometry, sphereMaterial);
@@ -242,14 +251,22 @@ function App() {
           onNodeClick={handleNodeClick}
         
         // link styling
-          linkWidth={0.5}
-          linkColor={() => '#555555'} // fixed color for all links
-          linkOpacity={link => {
-            if (link.value > 3) return 1;
-            if (link.value >= 2) return 0.3;
-            if (link.value >= 1) return 0.1;
-            else return 0; // fallback for unlinked (optional)
-          }}
+          linkWidth={0.25}
+          linkOpacity={1}
+          linkColor={(link) => {
+            if (link.value ===3) return '#868686';
+            if (link.value ===2) return '#555555';
+            if (link.value ===1) return '#313131';
+            return '#222222'; // fallback color for unlinked
+          }} // fixed color for all links
+
+          // linkOpacity={link => {
+          //     console.log('I am being called');
+          //   if (link.value >= 3) return 1;
+          //   if (link.value >= 2) return 0.5;
+          //   if (link.value >= 1) return 0.1;
+          //   else return 0; // fallback for unlinked (optional)
+          // }}
         />
       </div>
       {selectedNode && 
