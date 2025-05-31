@@ -1,5 +1,6 @@
 import React from 'react';
 import skillOptions from '../data/skillOptions';
+import { adjustSaturation } from '../utils/adjustSaturation';
 
 const getSkillColor = (skill) => {
   const group = skillOptions.find(group => group.skills.includes(skill));
@@ -20,25 +21,33 @@ const SkillFilter = ({ skillFilters, setSkillFilters }) => {
       {skillOptions.map(group => (
         <div key={group.label} className="flex flex-wrap gap-2">
           {group.skills.map(skill => {
-            const color = getSkillColor(skill);
+            const baseColor = getSkillColor(skill); // full saturation
+            const tonedColor = adjustSaturation(baseColor, 80); // reduced saturation
             const isSelected = skillFilters.includes(skill);
             return (
-            <button
-            key={skill}
-            onClick={() => toggleSkill(skill)}
-            className={`text-sm px-3 py-1 rounded-[4px] border text-white transition-all duration-200 ${
-                isSelected
-                ? 'border-transparent'
-                : 'bg-[#1a1a1a] hover:bg-[#2a2a2a]'
-            }`}
-            style={
-                isSelected
-                ? { backgroundColor: color }
-                : { borderColor: color }
-            }
-            >
-            {skill}
-            </button>
+              <button
+                key={skill}
+                onClick={() => toggleSkill(skill)}
+                className={`text-sm px-3 py-1 rounded-[4px] border text-white transition-all duration-200`}
+                style={
+                  isSelected
+                    ? { backgroundColor: baseColor,
+                        borderColor: baseColor  
+                    }
+                    : {
+                        borderColor: tonedColor,
+                        backgroundColor: 'transparent',
+                      }
+                }
+                onMouseEnter={(e) => {
+                  if (!isSelected) e.currentTarget.style.backgroundColor = baseColor;
+                }}
+                onMouseLeave={(e) => {
+                  if (!isSelected) e.currentTarget.style.backgroundColor = 'transparent';
+                }}
+              >
+                {skill}
+              </button>
             );
           })}
         </div>

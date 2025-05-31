@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import ForceGraph3D from 'react-force-graph-3d';
 import { generateLinks } from './utils/generateLinks';
 import { getScreenCoordinates } from './utils/flattenTo2d';
+import { adjustSaturation } from './utils/adjustSaturation';
+import skillOptions from './data/skillOptions'; // adjust path if needed
 import Sidebar from './components/Sidebar';
 import HoverCard from './components/HoverCard';
 import NodeForm from './components/NodeForm';
@@ -44,22 +46,6 @@ function App() {
       width: window.innerWidth,
       height: window.innerHeight
     });
-
-    // const filteredNodes = searchQuery.trim()
-    //   ? graphData.nodes.filter(node =>
-    //       node.fullName.toLowerCase().includes(searchQuery.toLowerCase())
-    //     )
-    //   : graphData.nodes;
-
-    // const filteredLinks = graphData.links.filter(link => {
-    //   const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-    //   const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-
-    //   const sourceInFiltered = filteredNodes.some(n => n.id === sourceId);
-    //   const targetInFiltered = filteredNodes.some(n => n.id === targetId);
-
-    //   return sourceInFiltered && targetInFiltered;
-    // });
 
     useEffect(() => {
       // Base case: no filters = show everything
@@ -163,6 +149,13 @@ function App() {
         });
     };
 
+    const fallbackColor = '#868686';
+
+    const getSkillColor = (skill) => {
+      const group = skillOptions.find(group => group.skills.includes(skill));
+      return group ? group.color : fallbackColor;
+    };
+
   return (
     <div className="App">
       <div className="fixed bottom-4 right-4 z-40 flex gap-3">
@@ -222,21 +215,30 @@ function App() {
           height={dimensions.height}
           backgroundColor='#161616'
 
-        // node styling
-          // backgroundColor='#f0f0f0'
-          // nodeColor={() => '#868686'}
-          // nodeAutoColorBy="year"
           nodeLabel="" // bun the label
+          nodeColor={null}
           nodeOpacity={1}
+
           nodeThreeObject={node => {
-              const sphereGeometry = new THREE.SphereGeometry(2, 32, 32); // radius, widthSegs, heightSegs
-              const sphereMaterial = new THREE.MeshToonMaterial({
-                color: new THREE.Color('#868686'),
-                roughness: 0.4,
-                metalness: 0.1
-              });
-              return new THREE.Mesh(sphereGeometry, sphereMaterial);
-            }}
+            const isHovered = hoveredNode?.id === node.id;
+            const isSelected = selectedNode?.id === node.id;
+            const primarySkill = node.skills?.skill1;
+            
+            const color = (isHovered || isSelected)
+              ? new THREE.Color(getSkillColor(primarySkill))
+              : new THREE.Color(fallbackColor);
+
+            const sphereGeometry = new THREE.SphereGeometry(2, 32, 32);
+            const sphereMaterial = new THREE.MeshToonMaterial({
+              color,
+              roughness: 0.4,
+              metalness: 0.1
+            });
+
+            return new THREE.Mesh(sphereGeometry, sphereMaterial);
+          }}
+
+
           onNodeClick={handleNodeClick}
         
         // link styling
