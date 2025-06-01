@@ -30,7 +30,7 @@ const Sidebar = ({ node, onClose }) => {
     >
       {/* Year in top-right corner */}
       {year && (
-        <div className="absolute top-[-48px] right-[-80px] text-[#c9c9c9] font-light text-4xl leading-[224px] whitespace-pre font-space-grotesk text-right text-[#333]">
+        <div className="absolute top-[-48px] right-[-80px] text-[#3e3e3e] font-light text-4xl leading-[224px] whitespace-pre font-space-grotesk text-right text-[#333]">
           {yearDisplay}
         </div>
       )}
