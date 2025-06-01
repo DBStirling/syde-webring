@@ -24,7 +24,7 @@ const Sidebar = ({ node, onClose }) => {
 
   return (
     <div
-      className={`fixed top-0 right-0 w-[40vw] max-w-[600px] min-w-[400px] h-screen z-25 bg-[#161616] border-l border-[#333333] overflow-y-auto
+      className={`fixed top-0 right-0 lg:w-[40vw] lg:max-w-[600px] lg:min-w-[400px] h-screen z-40 lg:z-25 bg-[#161616] border-l border-[#333333] overflow-y-auto
         transform transition-transform duration-500 ease-in-out overflow-x-hidden
         ${visible ? 'translate-x-0' : 'translate-x-full'}`}
     >
