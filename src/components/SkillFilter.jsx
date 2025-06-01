@@ -1,6 +1,5 @@
 import React from 'react';
 import skillOptions from '../data/skillOptions';
-import { adjustSaturation } from '../utils/adjustSaturation';
 
 const getSkillColor = (skill) => {
   const group = skillOptions.find(group => group.skills.includes(skill));
@@ -36,7 +35,7 @@ const SkillFilter = ({ skillFilters, setSkillFilters, visible }) => {
                 onClick={() => toggleSkill(skill)}
                 className="text-xs lg:text-sm px-3 py-1 rounded-[4px] border text-[#868686] transition-all duration-200"
                 style={{
-                  backgroundColor: isSelected ? baseColor : 'transparent',
+                  backgroundColor: isSelected ? baseColor : '#161616',
                   borderColor: isSelected ? baseColor : '#333',
                 }}
                 onMouseEnter={(e) => {
@@ -48,7 +47,7 @@ const SkillFilter = ({ skillFilters, setSkillFilters, visible }) => {
                 }}
                 onMouseLeave={(e) => {
                   if (!isSelected) {
-                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.backgroundColor = '#161616';
                     e.currentTarget.style.borderColor = '#333';
                     e.currentTarget.style.color = '#868686';
                   }
