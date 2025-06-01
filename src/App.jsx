@@ -184,7 +184,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="fixed bottom-4 right-4 z-40 flex flex-col items-end gap-2 font-['Space_Grotesk'] text-[20px] text-[#868686] opacity-50 hover:opacity-100 transition-opacity duration-200">
+      <div className="fixed bottom-4 right-4 z-40 flex flex-col items-end gap-2 font-space-grotesk text-[20px] text-[#868686] opacity-50 hover:opacity-100 transition-opacity duration-200">
         <button
           onClick={handleResetCamera}
           className="flex items-center gap-2 px-4 py-2 rounded hover:bg-[#2a2a2a] transition-all"
@@ -267,7 +267,7 @@ function App() {
           setSearchQuery={setSearchQuery} 
           toggleFilterUI={() => setFiltersVisible(prev => !prev)}
         />
-        <div className="fixed opacity-[50%] bottom-4 left-4 z-10 text-[#868686] font-light text-[64px] leading-[1] font-light font-['Space_Grotesk'] pointer-events-none whitespace-pre">
+        <div className="fixed opacity-[50%] bottom-4 left-4 z-10 text-[#868686] text-[64px] leading-[1] font-light font-space-grotesk pointer-events-none whitespace-pre">
           SYDE{"\n"}WEBRING
         </div>
       </div>

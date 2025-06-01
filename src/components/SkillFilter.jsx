@@ -20,7 +20,7 @@ const SkillFilter = ({ skillFilters, setSkillFilters, visible }) => {
     <div
       className={`
         fixed top-20 left-4 z-50 w-[280px] max-h-[80vh] overflow-y-auto
-        flex flex-col gap-4 font-light font-['Space_Grotesk']
+        flex flex-col gap-4 font-light font-space-grotesk
         transition-all duration-500 ease-in-out
         ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3 pointer-events-none'}
       `}

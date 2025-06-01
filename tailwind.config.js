@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'space-grotesk': ['"Space Grotesk"', 'sans-serif'],
+      },
       keyframes: {
         'float-in': {
           '0%': { opacity: '0', transform: 'translateY(2px)' },

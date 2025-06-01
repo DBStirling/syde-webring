@@ -63,7 +63,7 @@ const NodeForm = ({ onNewNode, onClose }) => {
     return (
         <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-5 text-[#c9c9c9] font-['Space_Grotesk']"
+        className="flex flex-col gap-5 text-[#c9c9c9] font-space-grotesk"
         >
         <div className="flex flex-col">
             <label className="text-sm text-[#868686]">Full Name</label>

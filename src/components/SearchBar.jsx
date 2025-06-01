@@ -2,7 +2,7 @@ import React from 'react';
 
 const SearchBar = ({ searchQuery, setSearchQuery, toggleFilterUI }) => {
     return (
-        <div className="z-50 flex items-center gap-2 font-light font-['Space_Grotesk']">
+        <div className="z-50 flex items-center gap-2 font-light font-space-grotesk">
             <input
                 type="text"
                 placeholder="Search by name..."
