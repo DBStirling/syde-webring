@@ -7,7 +7,7 @@ const getSkillColor = (skill) => {
   return group ? group.color : '#555';
 };
 
-const SkillFilter = ({ skillFilters, setSkillFilters }) => {
+const SkillFilter = ({ skillFilters, setSkillFilters, visible }) => {
   const toggleSkill = (skill) => {
     if (skillFilters.includes(skill)) {
       setSkillFilters(skillFilters.filter(s => s !== skill));
@@ -17,7 +17,14 @@ const SkillFilter = ({ skillFilters, setSkillFilters }) => {
   };
 
   return (
-    <div className="fixed top-20 left-4 z-50 flex flex-col gap-4 w-[280px] max-h-[80vh] overflow-y-auto font-light font-['Space_Grotesk']">
+    <div
+      className={`
+        fixed top-20 left-4 z-50 w-[280px] max-h-[80vh] overflow-y-auto
+        flex flex-col gap-4 font-light font-['Space_Grotesk']
+        transition-all duration-500 ease-in-out
+        ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3 pointer-events-none'}
+      `}
+    >
       {skillOptions.map(group => (
         <div key={group.label} className="flex flex-wrap gap-2">
           {group.skills.map(skill => {

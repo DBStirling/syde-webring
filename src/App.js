@@ -251,12 +251,12 @@ function App() {
           SYDE{"\n"}WEBRING
         </div>
       </div>
-      {filtersVisible && (
       <SkillFilter 
         skillFilters={skillFilters} 
         setSkillFilters={setSkillFilters} 
+        visible={filtersVisible}
       />
-      )}
+
       <div className="w-screen h-screen">
         <ForceGraph3D
         // important stuff
