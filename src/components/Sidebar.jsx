@@ -4,15 +4,24 @@ const Sidebar = ({ node, onClose }) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Trigger animation on mount
     setVisible(true);
-  }, []);
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setVisible(false);
+        setTimeout(onClose, 400); // same delay as close button
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   if (!node) return null;
 
   return (
     <div
-      className={`fixed top-0 right-0 w-[40vw] max-w-[600px] h-screen z-25 bg-[#161616] border-l border-[#333333] overflow-y-auto
+      className={`fixed top-0 right-0 w-[40vw] max-w-[600px] min-w-[400px] h-screen z-25 bg-[#161616] border-l border-[#333333] overflow-y-auto
         transform transition-transform duration-500 ease-in-out
         ${visible ? 'translate-x-0' : 'translate-x-full'}`}
     >
