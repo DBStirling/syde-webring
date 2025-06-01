@@ -11,6 +11,7 @@ import SearchBar from './components/SearchBar';
 import SkillFilter from './components/SkillFilter';
 import Loading from './components/Loading';
 import ViewToggle from './components/ViewToggle';
+import ListCard from './components/ListCard';
 import * as THREE from 'three';
 
 
@@ -274,16 +275,14 @@ function App() {
         visible={filtersVisible}
       />
       {listView ? (
-        <div className="px-4 py-6 overflow-y-auto">
-          {/* Replace this with your list card component logic */}
+        <div className="px-4 py-6 overflow-y-auto flex flex-col items-center">
           {filteredGraphData.nodes.map((node) => (
             <div
               key={node.id}
-              className="mb-4 p-4 border border-[#333] rounded text-[#c9c9c9] font-space-grotesk"
+              className="mb-4 w-[420px] cursor-pointer"
               onClick={() => setSelectedNode(node)}
             >
-              <h2 className="text-lg font-light">{node.fullName}</h2>
-              <p className="text-sm text-[#868686]">{node.skills?.skill1}</p>
+              <ListCard node={node} />
             </div>
           ))}
         </div>
