@@ -164,7 +164,33 @@ function App() {
 
   return (
     <div className="App">
-      <div className="fixed bottom-4 right-4 z-40 flex gap-3">
+      <a
+        href="https://github.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-4 right-4 z-40 flex items-center gap-2 px-4 py-2 rounded transition-all duration-200
+                  text-[#868686] text-[20px] opacity-50 font-['Space_Grotesk'] 
+                  hover:opacity-100 hover:bg-[#2a2a2a]"
+      >
+        get featured
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-5 h-5"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M7.5 16.5L16.5 7.5M16.5 7.5H9M16.5 7.5V15"
+          />
+        </svg>
+      </a>
+
+
+      {/* <div className="fixed bottom-4 right-4 z-40 flex gap-3">
         <button
           onClick={() => setIsNodeFormOpen(true)}
           className="bg-[#333] text-white px-4 py-2 rounded shadow hover:bg-[#444]"
@@ -190,12 +216,17 @@ function App() {
         >
           Clear Data
         </button>
+      </div> */}
+        <div className="fixed top-4 left-4 right-4 z-50 flex flex-col items-start gap-4">
+        <SearchBar 
+          searchQuery={searchQuery} 
+          setSearchQuery={setSearchQuery} 
+          toggleFilterUI={() => setFiltersVisible(prev => !prev)}
+        />
+        <div className="fixed opacity-[50%] bottom-4 left-4 z-10 text-[#868686] font-light text-[72px] leading-[1] font-light font-['Space_Grotesk'] pointer-events-none whitespace-pre">
+          SYDE{"\n"}WEBRING
+        </div>
       </div>
-      <SearchBar 
-        searchQuery={searchQuery} 
-        setSearchQuery={setSearchQuery} 
-        toggleFilterUI={() => setFiltersVisible(prev => !prev)}
-      />
       {filtersVisible && (
       <SkillFilter 
         skillFilters={skillFilters} 

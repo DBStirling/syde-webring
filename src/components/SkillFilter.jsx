@@ -21,29 +21,30 @@ const SkillFilter = ({ skillFilters, setSkillFilters }) => {
       {skillOptions.map(group => (
         <div key={group.label} className="flex flex-wrap gap-2">
           {group.skills.map(skill => {
-            const baseColor = getSkillColor(skill); // full saturation
-            const tonedColor = adjustSaturation(baseColor, 80); // reduced saturation
+            const baseColor = getSkillColor(skill);
             const isSelected = skillFilters.includes(skill);
             return (
               <button
                 key={skill}
                 onClick={() => toggleSkill(skill)}
-                className={`text-sm px-3 py-1 rounded-[4px] border text-white transition-all duration-200`}
-                style={
-                  isSelected
-                    ? { backgroundColor: baseColor,
-                        borderColor: baseColor  
-                    }
-                    : {
-                        borderColor: tonedColor,
-                        backgroundColor: 'transparent',
-                      }
-                }
+                className="text-sm px-3 py-1 rounded-[4px] border text-[#868686] transition-all duration-200"
+                style={{
+                  backgroundColor: isSelected ? baseColor : 'transparent',
+                  borderColor: isSelected ? baseColor : '#333',
+                }}
                 onMouseEnter={(e) => {
-                  if (!isSelected) e.currentTarget.style.backgroundColor = baseColor;
+                  if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = baseColor;
+                    e.currentTarget.style.borderColor = baseColor;
+                    e.currentTarget.style.color = '#FFFFFF';
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  if (!isSelected) e.currentTarget.style.backgroundColor = 'transparent';
+                  if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.borderColor = '#333';
+                    e.currentTarget.style.color = '#868686';
+                  }
                 }}
               >
                 {skill}
