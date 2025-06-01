@@ -19,9 +19,9 @@ const Loading = ({ onFinish }) => {
         fadeOut ? 'opacity-0' : 'opacity-100'
       }`}
     >
-        <h1 className="text-4xl font-space-grotesk font-light text-[#555] leading-none flex items-end gap-4">
+        <h1 className="text-lg lg:text-4xl font-space-grotesk font-light text-[#555] leading-none flex items-end gap-4">
             SYDE
-            <span className="flex gap-[2px] text-[256px]">
+            <span className="flex gap-[2px] text-lg lg:text-4xl">
             <span className="animate-bounce [animation-delay:.1s]">.</span>
             <span className="animate-bounce [animation-delay:.3s]">.</span>
             <span className="animate-bounce [animation-delay:.5s]">.</span>

@@ -19,7 +19,7 @@ const SkillFilter = ({ skillFilters, setSkillFilters, visible }) => {
   return (
     <div
       className={`
-        fixed top-20 left-4 z-50 w-[280px] max-h-[80vh] overflow-y-auto
+        fixed top-20 left-4 z-50 max-h-[20vh] w-[90vw] lg:w-[292px] lg:max-h-none overflow-y-auto
         flex flex-col gap-4 font-light font-space-grotesk
         transition-all duration-500 ease-in-out
         ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3 pointer-events-none'}
@@ -34,7 +34,7 @@ const SkillFilter = ({ skillFilters, setSkillFilters, visible }) => {
               <button
                 key={skill}
                 onClick={() => toggleSkill(skill)}
-                className="text-sm px-3 py-1 rounded-[4px] border text-[#868686] transition-all duration-200"
+                className="text-xs lg:text-sm px-3 py-1 rounded-[4px] border text-[#868686] transition-all duration-200"
                 style={{
                   backgroundColor: isSelected ? baseColor : 'transparent',
                   borderColor: isSelected ? baseColor : '#333',

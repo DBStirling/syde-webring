@@ -24,7 +24,7 @@ const Sidebar = ({ node, onClose }) => {
 
   return (
     <div
-      className={`fixed top-0 right-0 lg:w-[40vw] lg:max-w-[600px] lg:min-w-[400px] h-screen z-40 lg:z-25 bg-[#161616] border-l border-[#333333] overflow-y-auto
+      className={`fixed top-0 right-0 w-full lg:w-[40vw] lg:max-w-[600px] lg:min-w-[400px] h-screen z-40 lg:z-25 bg-[#161616] border-l border-[#333333] overflow-y-auto
         transform transition-transform duration-500 ease-in-out overflow-x-hidden
         ${visible ? 'translate-x-0' : 'translate-x-full'}`}
     >
@@ -35,10 +35,10 @@ const Sidebar = ({ node, onClose }) => {
         </div>
       )}
 
-      <div className="relative py-[120px] flex flex-col gap-10">
+      <div className="relative py-[40px] lg:py-[68px] flex flex-col gap-10">
         {/* Header */}
         <div className={`border-l-[6px]`} style={{ borderColor: node.color || '#868686' }}>
-          <div className="pl-[64px] flex flex-col gap-[4px] text-[#c9c9c9] w-full font-['Space_Grotesk'] leading-none font-light uppercase">
+          <div className="pl-[32px] lg:pl-[64px] flex flex-col gap-[4px] text-[#c9c9c9] w-full font-['Space_Grotesk'] leading-none font-light uppercase">
             <div className="ml-[3px] text-base">{node.fullName?.split(' ')[0]}</div>
             <div className="text-xl">
               {node.fullName?.split(' ').slice(1).join(' ') || ''}
@@ -46,10 +46,10 @@ const Sidebar = ({ node, onClose }) => {
           </div>
         </div>
 
-        <div className="px-[74px] flex flex-col gap-5 font-space-grotesk">
+        <div className="px-[40px] lg:px-[74px] flex flex-col gap-5 font-space-grotesk">
           {node.website && (
             <div className="flex flex-col">
-              <div className="text-xs text-[#3e3e3e]">WEBSITE</div>
+              <div className="text-sm text-[#3e3e3e]">WEBSITE</div>
               <a
                 href={node.website}
                 target="_blank"
@@ -61,7 +61,7 @@ const Sidebar = ({ node, onClose }) => {
             </div>
           )}
 
-          <div className="h-0 border border-[#333]" />
+          {/* <div className="h-0 border border-[#333]" /> */}
 
           <div className="flex flex-col gap-6">
             {Object.entries(node.skills || {}).map(([label, value], idx) =>
@@ -74,7 +74,7 @@ const Sidebar = ({ node, onClose }) => {
             )}
           </div>
 
-          <div className="h-0 border border-[#333]" />
+          {/* <div className="h-0 border border-[#333]" /> */}
 
           {node.bio && (
             <div className="flex flex-col gap-2">

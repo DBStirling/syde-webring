@@ -184,7 +184,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="fixed bottom-4 right-4 z-40 flex flex-col items-end gap-2 font-space-grotesk text-sm lg:text-base text-[#868686] opacity-50 hover:opacity-100 transition-opacity duration-200">
+      <div className="fixed bottom-4 right-4 z-40 lg:z-50 flex flex-col items-end gap-2 font-space-grotesk text-sm lg:text-base text-[#868686] opacity-50 hover:opacity-100 transition-opacity duration-200">
         <button
           onClick={handleResetCamera}
           className="flex items-center gap-2 px-4 py-2 rounded hover:bg-[#2a2a2a] transition-all"
@@ -256,13 +256,13 @@ function App() {
           Clear Data
         </button>
       </div> */}
-        <div className="fixed top-4 left-4 z-40 lg:z-50 flex flex-col items-start gap-4 w-full">
+        <div className="fixed top-4 left-4 z-40 lg:z-40 flex flex-col items-start gap-4 w-full">
         <SearchBar 
           searchQuery={searchQuery} 
           setSearchQuery={setSearchQuery} 
           toggleFilterUI={() => setFiltersVisible(prev => !prev)}
         />
-        <div className="fixed opacity-[50%] bottom-4 left-4 z-10 text-[#868686] text-xl lg:text-2xl leading-[1] font-light font-space-grotesk pointer-events-none whitespace-pre">
+        <div className="fixed opacity-[50%] bottom-4 left-4 z-10 lg:z-50 text-[#868686] text-xl lg:text-2xl leading-[1] font-light font-space-grotesk pointer-events-none whitespace-pre">
           SYDE{"\n"}WEBRING
         </div>
       </div>
@@ -275,6 +275,7 @@ function App() {
       <div className="w-screen h-screen">
         <ForceGraph3D
         // important stuff
+          showNavInfo={false}
           ref={fgRef}
           graphData={filteredGraphData}
           onNodeHover={node => {
