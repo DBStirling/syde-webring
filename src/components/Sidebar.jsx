@@ -77,7 +77,7 @@ const Sidebar = ({ node, onClose }) => {
           {/* <div className="h-0 border border-[#333]" /> */}
 
           {node.bio && (
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col">
               <div className="text-xs text-[#3e3e3e] uppercase tracking-wider">Bio</div>
               <div className="text-sm lg:text-base leading-[28px] text-[#c9c9c9] font-light whitespace-pre-line break-words">
                 {node.bio}
