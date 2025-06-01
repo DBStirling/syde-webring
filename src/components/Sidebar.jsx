@@ -19,12 +19,22 @@ const Sidebar = ({ node, onClose }) => {
 
   if (!node) return null;
 
+  const year = node.year?.toString().slice(-2) || '';
+  const yearDisplay = `'${year[0]}\n${year[1] || ''}`;
+
   return (
     <div
       className={`fixed top-0 right-0 w-[40vw] max-w-[600px] min-w-[400px] h-screen z-25 bg-[#161616] border-l border-[#333333] overflow-y-auto
-        transform transition-transform duration-500 ease-in-out
+        transform transition-transform duration-500 ease-in-out overflow-x-hidden
         ${visible ? 'translate-x-0' : 'translate-x-full'}`}
     >
+      {/* Year in top-right corner */}
+      {year && (
+        <div className="absolute top-[-48px] right-[-80px] text-[#c9c9c9] font-light text-4xl leading-[224px] whitespace-pre font-space-grotesk text-right text-[#333]">
+          {yearDisplay}
+        </div>
+      )}
+
       <div className="relative py-[120px] flex flex-col gap-10">
         {/* Header */}
         <div className={`border-l-[6px]`} style={{ borderColor: node.color || '#868686' }}>
@@ -37,7 +47,6 @@ const Sidebar = ({ node, onClose }) => {
         </div>
 
         <div className="px-[74px] flex flex-col gap-5 font-space-grotesk">
-          {/* Website */}
           {node.website && (
             <div className="flex flex-col">
               <div className="text-xs text-[#3e3e3e]">WEBSITE</div>
@@ -54,7 +63,6 @@ const Sidebar = ({ node, onClose }) => {
 
           <div className="h-0 border border-[#333]" />
 
-          {/* Skills */}
           <div className="flex flex-col gap-6">
             {Object.entries(node.skills || {}).map(([label, value], idx) =>
               value ? (
@@ -68,7 +76,6 @@ const Sidebar = ({ node, onClose }) => {
 
           <div className="h-0 border border-[#333]" />
 
-          {/* Bio */}
           {node.bio && (
             <div className="flex flex-col gap-2">
               <div className="text-xs text-[#3e3e3e] uppercase tracking-wider">Bio</div>
@@ -83,7 +90,7 @@ const Sidebar = ({ node, onClose }) => {
       <button
         onClick={() => {
           setVisible(false);
-          setTimeout(onClose, 400); // wait for animation to finish
+          setTimeout(onClose, 400);
         }}
         className="absolute top-4 right-4 text-[#868686] hover:text-white text-lg font-light leading-none"
         aria-label="Close"
