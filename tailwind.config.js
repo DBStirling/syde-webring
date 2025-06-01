@@ -22,7 +22,6 @@ module.exports = {
           '0%': { opacity: '0', transform: 'translateY(2px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        // Note: This only works with content-aware pseudo elements
         ellipsis: {
           '0%, 20%': { content: "' '" },
           '40%': { content: "'.'" },
@@ -34,7 +33,10 @@ module.exports = {
         'float-in': 'float-in 0.5s ease-out forwards',
         'ellipsis': 'ellipsis 1.2s steps(4, end) infinite',
       },
+      zIndex: {
+        51: '51',
+      },
     },
   },
   plugins: [],
-}
+};

@@ -3,13 +3,14 @@ import ForceGraph3D from 'react-force-graph-3d';
 import { generateLinks } from './utils/generateLinks';
 import { getScreenCoordinates } from './utils/flattenTo2d';
 // import { adjustSaturation } from './utils/adjustSaturation';
-import skillOptions from './data/skillOptions'; // adjust path if needed
+import skillOptions from './data/skillOptions';
 import Sidebar from './components/Sidebar';
 import HoverCard from './components/HoverCard';
 import NodeForm from './components/NodeForm';
 import SearchBar from './components/SearchBar';
 import SkillFilter from './components/SkillFilter';
-import Loading from './components/Loading'; // adjust the path if needed
+import Loading from './components/Loading';
+import ViewToggle from './components/ViewToggle';
 import * as THREE from 'three';
 
 
@@ -25,7 +26,7 @@ function App() {
     const [searchQuery, setSearchQuery] = useState('');
     const [skillFilters, setSkillFilters] = useState([]);
     const [filtersVisible, setFiltersVisible] = useState(false);
-
+    const [listView, setListView] = useState(false);
 
     // const handleClearLocalStorage = () => {
     //   const confirmed = window.confirm("Are you sure you want to clear all nodes? This cannot be undone.");
@@ -256,13 +257,14 @@ function App() {
           Clear Data
         </button>
       </div> */}
-        <div className="fixed top-4 left-4 z-40 lg:z-40 flex flex-col items-start gap-4 w-full">
+      <ViewToggle listView={listView} setListView={setListView} />
+      <div className="fixed top-4 left-4 z-50 lg:z-50 flex flex-col items-start gap-4 w-full">
         <SearchBar 
           searchQuery={searchQuery} 
           setSearchQuery={setSearchQuery} 
           toggleFilterUI={() => setFiltersVisible(prev => !prev)}
         />
-        <div className="fixed opacity-[50%] bottom-4 left-4 z-10 lg:z-50 text-[#868686] text-xl lg:text-2xl leading-[1] font-light font-space-grotesk pointer-events-none whitespace-pre">
+        <div className="fixed opacity-[50%] bottom-4 left-4 z-10 lg:z-51 text-[#868686] text-xl lg:text-2xl leading-[1] font-light font-space-grotesk pointer-events-none whitespace-pre">
           SYDE{"\n"}WEBRING
         </div>
       </div>
@@ -271,7 +273,21 @@ function App() {
         setSkillFilters={setSkillFilters} 
         visible={filtersVisible}
       />
-
+      {listView ? (
+        <div className="px-4 py-6 overflow-y-auto">
+          {/* Replace this with your list card component logic */}
+          {filteredGraphData.nodes.map((node) => (
+            <div
+              key={node.id}
+              className="mb-4 p-4 border border-[#333] rounded text-[#c9c9c9] font-space-grotesk"
+              onClick={() => setSelectedNode(node)}
+            >
+              <h2 className="text-lg font-light">{node.fullName}</h2>
+              <p className="text-sm text-[#868686]">{node.skills?.skill1}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
       <div className="w-screen h-screen">
         <ForceGraph3D
         // important stuff
@@ -340,6 +356,7 @@ function App() {
           // }}
         />
       </div>
+      )}
       {selectedNode && 
         <Sidebar 
           node={selectedNode} 
@@ -351,7 +368,7 @@ function App() {
         pos={hoverPos} 
       />
       {/* <NodeForm onNewNode={handleNewNode} /> */}
-      {isNodeFormOpen && (
+      {/* {isNodeFormOpen && (
         <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center">
           <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-2xl w-full max-w-md">
             <div className="flex justify-end">
@@ -366,7 +383,7 @@ function App() {
             <NodeForm onNewNode={handleNewNode} onClose={() => setIsNodeFormOpen(false)}/>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
