@@ -49,12 +49,12 @@ const Sidebar = ({ node, onClose }) => {
         <div className="px-[40px] lg:px-[74px] flex flex-col gap-5 font-space-grotesk">
           {node.website && (
             <div className="flex flex-col">
-              <div className="text-sm text-[#3e3e3e]">WEBSITE</div>
+              <div className="text-xs text-[#3e3e3e]">WEBSITE</div>
               <a
                 href={node.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-base text-[#c9c9c9] font-light underline break-all"
+                className="text-sm lg:text-base text-[#c9c9c9] font-light underline break-all"
               >
                 {node.website}
               </a>
@@ -68,7 +68,7 @@ const Sidebar = ({ node, onClose }) => {
               value ? (
                 <div key={idx} className="flex flex-col w-fit">
                   <div className="text-xs text-[#3e3e3e] font-light">{label.toUpperCase()}</div>
-                  <div className="text-base text-[#c9c9c9] font-light">{value}</div>
+                  <div className="text-sm lg:text-base text-[#c9c9c9] font-light">{value}</div>
                 </div>
               ) : null
             )}
@@ -79,7 +79,7 @@ const Sidebar = ({ node, onClose }) => {
           {node.bio && (
             <div className="flex flex-col gap-2">
               <div className="text-xs text-[#3e3e3e] uppercase tracking-wider">Bio</div>
-              <div className="text-base leading-[28px] text-[#c9c9c9] font-light whitespace-pre-line break-words">
+              <div className="text-sm lg:text-base leading-[28px] text-[#c9c9c9] font-light whitespace-pre-line break-words">
                 {node.bio}
               </div>
             </div>
