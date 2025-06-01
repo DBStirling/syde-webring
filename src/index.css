@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* index.css or App.css */
+body, html {
+  background-color: #161616;
+  margin: 0;
+  padding: 0;
+}

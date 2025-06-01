@@ -9,6 +9,7 @@ import HoverCard from './components/HoverCard';
 import NodeForm from './components/NodeForm';
 import SearchBar from './components/SearchBar';
 import SkillFilter from './components/SkillFilter';
+import Loading from './components/Loading'; // adjust the path if needed
 import * as THREE from 'three';
 
 
@@ -26,15 +27,15 @@ function App() {
     const [filtersVisible, setFiltersVisible] = useState(false);
 
 
-    const handleClearLocalStorage = () => {
-      const confirmed = window.confirm("Are you sure you want to clear all nodes? This cannot be undone.");
-      if (!confirmed) return;
+    // const handleClearLocalStorage = () => {
+    //   const confirmed = window.confirm("Are you sure you want to clear all nodes? This cannot be undone.");
+    //   if (!confirmed) return;
 
-      localStorage.removeItem('nodes');
-      setGraphData({ nodes: [], links: [] });
-      setSelectedNode(null);
-      setHoveredNode(null);
-    };
+    //   localStorage.removeItem('nodes');
+    //   setGraphData({ nodes: [], links: [] });
+    //   setSelectedNode(null);
+    //   setHoveredNode(null);
+    // };
     const handleResetCamera = () => {
       fgRef.current.cameraPosition(
         { x: 0, y: 0, z: 500 }, // New position
@@ -42,6 +43,8 @@ function App() {
         3000                    // Transition duration (ms)
       );
     };
+
+    const [loading, setLoading] = useState(true);
 
     const [dimensions, setDimensions] = useState({
       width: window.innerWidth,
@@ -97,24 +100,40 @@ function App() {
       return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    // useEffect(() => {
+    //   const storedNodes = JSON.parse(localStorage.getItem('nodes'));
+    //   if (storedNodes && storedNodes.length > 0) {
+    //     const links = generateLinks(storedNodes);
+    //     setGraphData({ nodes: storedNodes, links });
+    //   } else {
+    //     // fallback to initial static JSON if localStorage is empty
+    //     fetch('/data.json')
+    //       .then(res => res.json())
+    //       .then(data => {
+    //         const links = generateLinks(data.nodes);
+    //         setGraphData({ nodes: data.nodes, links });
+    //         localStorage.setItem('nodes', JSON.stringify(data.nodes));
+    //       });
+    //   }
+    // }, []);
+
     useEffect(() => {
-      
       const storedNodes = JSON.parse(localStorage.getItem('nodes'));
       if (storedNodes && storedNodes.length > 0) {
         const links = generateLinks(storedNodes);
         setGraphData({ nodes: storedNodes, links });
+        setLoading(false); // ✅ stop loading
       } else {
-        // fallback to initial static JSON if localStorage is empty
         fetch('/data.json')
           .then(res => res.json())
           .then(data => {
             const links = generateLinks(data.nodes);
             setGraphData({ nodes: data.nodes, links });
             localStorage.setItem('nodes', JSON.stringify(data.nodes));
+            setLoading(false); // ✅ stop loading
           });
       }
     }, []);
-
 
     const handleNewNode = (newNode) => {
       const newNodes = [...graphData.nodes, newNode];
@@ -134,21 +153,21 @@ function App() {
       );
     };
 
-    const handleLoadPreset = () => {
-      fetch('/data.json')
-        .then(res => res.json())
-        .then(data => {
-          const links = generateLinks(data.nodes);
-          setGraphData({ nodes: data.nodes, links });
-          localStorage.setItem('nodes', JSON.stringify(data.nodes));
-          setSelectedNode(null);
-          setHoveredNode(null);
-        })
-        .catch(err => {
-          console.error("Failed to load preset data:", err);
-          alert("Failed to load preset data.");
-        });
-    };
+    // const handleLoadPreset = () => {
+    //   fetch('/data.json')
+    //     .then(res => res.json())
+    //     .then(data => {
+    //       const links = generateLinks(data.nodes);
+    //       setGraphData({ nodes: data.nodes, links });
+    //       localStorage.setItem('nodes', JSON.stringify(data.nodes));
+    //       setSelectedNode(null);
+    //       setHoveredNode(null);
+    //     })
+    //     .catch(err => {
+    //       console.error("Failed to load preset data:", err);
+    //       alert("Failed to load preset data.");
+    //     });
+    // };
 
     const fallbackColor = '#868686';
 
@@ -161,6 +180,7 @@ function App() {
 // console.log('Filtered links:', filteredGraphData.links.length);
 // console.log('Sample link:', filteredGraphData.links[0]);
 
+  if (loading) return <Loading onFinish={() => setLoading(false)} />;
 
   return (
     <div className="App">
