@@ -8,9 +8,9 @@ To add your site to the webring, you must be a current student or alum of the Sy
 
 ### Step-by-step guide for joining
 1. Log in to your github account and **go to [this repo](https://github.com/DBStirling/syde-webring)**.
-2. **Clone the repo** locally with your code editor **OR  edit directly in your browser**.
-3. **Open the file** --> `/public/data.json`
-4. **Add your information**. Scroll to the bottom of the file, and add a new "node". **Use the following template**, and paste it in as another object in the array of nodes. 
+2. **Fork the repo AND/OR edit directly in your browser**.
+3. **Open the file** --> ```/public/data.json``` Either clone the forked repo to make your changes via code editor, or do so in your browser, using the edit button on the top right. 
+4. **Add your information**. Scroll to the bottom of the file, and add a new "node" (insert comma after second last curly brace). **Use the following template**, and paste it in as another object in the array of nodes.
 ```
 {
     "id": 1,
@@ -38,9 +38,14 @@ const skillOptions = [
 ```
 5. **Make sure to:** *copy your skills directly* from the skill list, *update your colour* to match your primary skill group and *make your id number 1 greater* than the person before you.**
 
-6. **Scroll down and propose changes**. Below the file, add the following title 'Add [Your Full Name]', then click the green “Propose changes” button.
+6. **Propose your changes**. If done in your browser, scroll down to the bottom. Below the file, add the following title 'Add [Your Full Name]', then click the green “Propose changes” button. If you're using a code editor, make sure to 
+```
+git add . 
+git commit -m "Added profile!"
+git push origin main
+```
 
-7. Click the green **Create pull request** button.
+7. On github, click the green **Create pull request** button. If forked, this will appear in your forked repository. 
 
 8. **Done!** Wait for your PR to be reviewed and merged if everything looks good (no typos or innappropriate content).
 
