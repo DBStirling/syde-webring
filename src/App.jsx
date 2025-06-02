@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import ForceGraph3D from 'react-force-graph-3d';
 import { generateLinks } from './utils/generateLinks';
 import { getScreenCoordinates } from './utils/flattenTo2d';
-import skillOptions from './data/skillOptions';
 import Sidebar from './components/Sidebar';
 import HoverCard from './components/HoverCard';
 import SearchBar from './components/SearchBar';
@@ -168,11 +167,6 @@ function App() {
 
     const fallbackColor = '#868686';
 
-    const getSkillColor = (skill) => {
-      const group = skillOptions.find(group => group.skills.includes(skill));
-      return group ? group.color : fallbackColor;
-    };
-
 // console.log('Filtered nodes:', filteredGraphData.nodes.length);
 // console.log('Filtered links:', filteredGraphData.links.length);
 // console.log('Sample link:', filteredGraphData.links[0]);
@@ -287,10 +281,9 @@ function App() {
             const isHovered = hoveredNode?.id === node.id;
             const isSelected = selectedNode?.id === node.id;
             const isDragged = draggedNode?.id === node.id;
-            const primarySkill = node.skills?.skill1;
             
             const color = (isHovered || isSelected || isDragged)
-              ? new THREE.Color(getSkillColor(primarySkill))
+              ? new THREE.Color(node.color)
               : new THREE.Color(fallbackColor);
 
             const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);

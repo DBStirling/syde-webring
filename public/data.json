@@ -25,6 +25,19 @@
     "website": "https://pranavgopinath.com",
     "bio": "bare tuff",
     "color": "#8B32EB"
+},
+{
+    "id": 3,
+    "fullName": "Matia Lee",
+    "year": 2028,
+    "skills": {
+    "skill1": "Full Stack",
+    "skill2": "AI/ML",
+    "skill3": "Backend"
+    },
+    "website": "https://matialee.com/",
+    "bio": "i like movies :)",
+    "color": "#2563EB"
 }
 ],
 "links": []
