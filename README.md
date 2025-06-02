@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# SYDE Webring
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What is this?
+SYDE is a mystery bag of a program. **This webring is designed to help you explore the current students and alumni of SYDE, while increasing the discoverability of our personal sites**. We're all linked in some way or another, so traverse the nodes by connections or search by name, year or skillset year to find someone specific. 
 
-## Available Scripts
+## How do I join?
+To add your site to the webring, you must be a current student or alum of the Systems Design Engineering undergrad program at the University of Waterloo and create a pull request on [this repo](https://github.com/DBStirling/syde-webring).
 
-In the project directory, you can run:
+### Step-by-step guide for joining
+1. **Go to [this repo](https://github.com/DBStirling/syde-webring)** and login to your github account.
+2. **Fork the repo** by clicking the "fork" button at the top-right of the page.
+3. Open your forked copy, find and **click into the data.json file**.
+4. **Click the pencil icon** at the top right of the file. This will let you edit directly in your browser.
+5. **Scroll to the bottom and prep it for your object**. Add a comma after the second last curly bracket and create a new line below it.
+6. **Fill in the following template and paste it into the new line**. Make sure to: copy your skills directly from the skill list, update your colour to match your primary skill group and make your id number 1 greater than the person before you.
+```
+{
+    "id": 1,
+    "fullName": "David Stirling",
+    "year": 2028,
+    "skills": {
+    "skill1": "UX/UI",
+    "skill2": "Product",
+    "skill3": "Frontend"
+    },
+    "website": "https://davidstirling.me/",
+    "bio": "Add a sentence or two here",
+    "color": "#BD17C0"
+}
+```
+```
+const skillOptions = [
+    { label: "Design", skills: ["UX/UI", "UXR", "Graphic"], color: "#BD17C0" },
+    { label: "Code", skills: ["Frontend", "Backend", "Full Stack", "AI/ML", "Quant", "QA"], color: "#8B32EB"  },
+    { label: "PM", skills: ["Product", "Project", "Program"], color: "#413ce2"  },
+    { label: "Mech", skills: ["Mech", "Manufacturing", "Product Design", "Materials", "Auto", "Aero"], color: "#24a9d9"  },
+    { label: "Elec", skills: ["Elec", "Embedded", "Robotics"], color: "#30CFAA"  },
+    { label: "Other", skills: ["Business", "VC", "IDK Yet!", "Other"], color: "#868686"  }
+];
+```
 
-### `npm start`
+6. **Scroll down and propose changes**. Below the file, write a short title like 'Add [Your Name] to webring', then click the green “Propose changes” button.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+7. Click the green **Create pull request** button.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+8. **Done!** Wait for your PR to be reviewed and merged if everything looks good (no typos or innappropriate content).
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Don't see your skill?
+Follow the steps above to make a pull request and edit the skillOptions.js file to add your own skill. Please only do so if there is a large oversight, like a missing skillset, NOT for similar or synonymous titles (i.e. Product Designer & UX/UI Designer).
