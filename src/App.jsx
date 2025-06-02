@@ -260,7 +260,7 @@ function App() {
           Clear Data
         </button>
       </div> */}
-      <ViewToggle listView={listView} setListView={setListView} />
+      <ViewToggle className="w-" listView={listView} setListView={setListView} />
       <div className="fixed top-16 lg:top-4 left-4 z-50 lg:z-50 flex flex-col items-start gap-4 w-full">
         <SearchBar 
           searchQuery={searchQuery} 
@@ -277,7 +277,7 @@ function App() {
         visible={filtersVisible}
       />
       {listView ? (
-        <div className="mt-28 lg:mt-12 lg:px-4 lg:py-6 overflow-y-auto flex flex-col items-center max-h-[65vh] lg:min-h-screen overflow-y-auto">
+        <div className="mt-28 w-full max-w-full lg:max-w-[420px] lg:mt-12 lg:px-4 lg:py-6 overflow-y-auto flex flex-col items-center max-h-[65vh] lg:min-h-screen overflow-y-auto">
           {filteredGraphData.nodes.map((node) => (
             <div
               key={node.id}
