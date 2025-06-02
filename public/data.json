@@ -12,6 +12,19 @@
     "website": "https://davidstirling.me/",
     "bio": "basketball and books",
     "color": "#BD17C0"
+},
+{
+    "id": 2,
+    "fullName": "Pranav Gopinath",
+    "year": 2028,
+    "skills": {
+    "skill1": "Full Stack",
+    "skill2": "Backend",
+    "skill3": "Frontend"
+    },
+    "website": "https://pranavgopinath.com",
+    "bio": "",
+    "color": "#BD17C0"
 }
 ],
 "links": []
