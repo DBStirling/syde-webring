@@ -4,15 +4,15 @@
 SYDE is a mystery bag of a program. **This webring is designed to help you explore the current students and alumni of SYDE, while increasing the discoverability of our personal sites**. We're all linked in some way or another, so traverse the nodes by connections or search by name, year or skillset year to find someone specific. 
 
 ## How do I join?
-To add your site to the webring, you must be a current student or alum of the Systems Design Engineering undergrad program at the University of Waterloo and create a pull request on [this repo](https://github.com/DBStirling/syde-webring).
+To add your site to the webring, you must be a current student or alum of the Systems Design Engineering undergrad program at the University of Waterloo and create a pull request on this repo.
 
 ### Step-by-step guide for joining
-1. **Go to [this repo](https://github.com/DBStirling/syde-webring)** and login to your github account.
+1. Log in to your github account and **go to [this repo](https://github.com/DBStirling/syde-webring)**.
 2. **Fork the repo** by clicking the "fork" button at the top-right of the page.
-3. Open your forked copy, find and **click into the data.json file**.
-4. **Click the pencil icon** at the top right of the file. This will let you edit directly in your browser.
-5. **Scroll to the bottom and prep it for your object**. Add a comma after the second last curly bracket and create a new line below it.
-6. **Fill in the following template and paste it into the new line**. Make sure to: copy your skills directly from the skill list, update your colour to match your primary skill group and make your id number 1 greater than the person before you.
+3. Open your forked copy and **click into the data.json file**.
+4. **Edit the file** directly in your browser by clicking the pencil icon at the top right of the file.
+5. **Scroll to the bottom and prep the file for your information**. Add a comma after the second last curly bracket and create a new line below it.
+6. **Fill out the following template and paste it into the new line**. Make sure to: copy your skills directly from the skill list, update your colour to match your primary skill group and make your id number 1 greater than the person before you.
 ```
 {
     "id": 1,
@@ -39,7 +39,7 @@ const skillOptions = [
 ];
 ```
 
-6. **Scroll down and propose changes**. Below the file, write a short title like 'Add [Your Name] to webring', then click the green “Propose changes” button.
+6. **Scroll down and propose changes**. Below the file, add the following title 'Add [Your Full Name]', then click the green “Propose changes” button.
 
 7. Click the green **Create pull request** button.
 
