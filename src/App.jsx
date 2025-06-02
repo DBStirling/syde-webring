@@ -119,22 +119,18 @@ function App() {
     // }, []);
 
     useEffect(() => {
-      const storedNodes = JSON.parse(localStorage.getItem('nodes'));
-      if (storedNodes && storedNodes.length > 0) {
-        const links = generateLinks(storedNodes);
-        setGraphData({ nodes: storedNodes, links });
-        setLoading(false); // ✅ stop loading
-      } else {
-        fetch('/data.json')
-          .then(res => res.json())
-          .then(data => {
-            const links = generateLinks(data.nodes);
-            setGraphData({ nodes: data.nodes, links });
-            localStorage.setItem('nodes', JSON.stringify(data.nodes));
-            setLoading(false); // ✅ stop loading
-          });
-      }
+      fetch('/data.json')
+        .then(res => res.json())
+        .then(data => {
+          const links = generateLinks(data.nodes);
+          setGraphData({ nodes: data.nodes, links });
+          setLoading(false); // ✅ stop loading
+        })
+        .catch(err => {
+          console.error("Failed to load data.json:", err);
+        });
     }, []);
+
 
     // const handleNewNode = (newNode) => {
     //   const newNodes = [...graphData.nodes, newNode];
