@@ -8,11 +8,11 @@ const SearchBar = ({ searchQuery, setSearchQuery, toggleFilterUI }) => {
                 placeholder="Search by name..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-[#1a1a1a] text-white px-4 rounded border border-[#333] placeholder-[#555] outline-none h-[40px] w-full"
+                className="bg-[#1a1a1a]/50 text-white px-4 rounded border border-[#333] placeholder-[#555] outline-none h-[40px] w-full"
             />
             <button
                 onClick={toggleFilterUI}
-                className="text-sm bg-[#1a1a1a] text-[#868686] px-3 rounded border border-[#333] hover:bg-[#3a3a3a] h-[40px] w-min"
+                className="text-sm bg-[#1a1a1a]/50 text-[#868686] px-3 rounded border border-[#333] hover:bg-[#3a3a3a] h-[40px] w-min"
                 aria-label="Toggle Filters"
             >
                 ☰

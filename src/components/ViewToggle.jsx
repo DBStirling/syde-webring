@@ -5,7 +5,7 @@ const ViewToggle = ({ listView, setListView }) => {
         <div className={`
         z-51 flex justify-center items-center font-light font-space-grotesk
         ${/* desktop fixed center */ ''}
-        hidden lg:flex fixed top-4 left-1/2 transform -translate-x-1/2 w-[420px]
+        lg:flex fixed top-4 left-1/2 transform -translate-x-1/2 w-[420px] px-10 lg:px-0
         `}>
         <div className="flex h-[40px] rounded overflow-hidden w-full transition-opacity duration-200">
             <button
