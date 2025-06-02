@@ -2,11 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import ForceGraph3D from 'react-force-graph-3d';
 import { generateLinks } from './utils/generateLinks';
 import { getScreenCoordinates } from './utils/flattenTo2d';
-// import { adjustSaturation } from './utils/adjustSaturation';
 import skillOptions from './data/skillOptions';
 import Sidebar from './components/Sidebar';
 import HoverCard from './components/HoverCard';
-import NodeForm from './components/NodeForm';
 import SearchBar from './components/SearchBar';
 import SkillFilter from './components/SkillFilter';
 import Loading from './components/Loading';
@@ -22,7 +20,6 @@ function App() {
     const [hoveredNode, setHoveredNode] = useState(null);
     const [draggedNode, setDraggedNode] = useState(null);
     const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
-    const [isNodeFormOpen, setIsNodeFormOpen] = useState(false);
     const [filteredGraphData, setFilteredGraphData] = useState({ nodes: [], links: [] });
     const [searchQuery, setSearchQuery] = useState('');
     const [skillFilters, setSkillFilters] = useState([]);
@@ -139,12 +136,12 @@ function App() {
       }
     }, []);
 
-    const handleNewNode = (newNode) => {
-      const newNodes = [...graphData.nodes, newNode];
-      const newLinks = generateLinks(newNodes);
-      localStorage.setItem('nodes', JSON.stringify(newNodes)); // keep localStorage in sync
-      setGraphData({ nodes: newNodes, links: newLinks });
-    };
+    // const handleNewNode = (newNode) => {
+    //   const newNodes = [...graphData.nodes, newNode];
+    //   const newLinks = generateLinks(newNodes);
+    //   localStorage.setItem('nodes', JSON.stringify(newNodes)); // keep localStorage in sync
+    //   setGraphData({ nodes: newNodes, links: newLinks });
+    // };
 
     const handleNodeClick = (node) => {
       setSelectedNode(node);
@@ -233,33 +230,6 @@ function App() {
           </svg>
         </a>
       </div>
-      {/* <div className="fixed bottom-4 right-4 z-40 flex gap-3">
-        <button
-          onClick={() => setIsNodeFormOpen(true)}
-          className="bg-[#333] text-white px-4 py-2 rounded shadow hover:bg-[#444]"
-        >
-          Add Node +
-        </button>
-        <button
-          onClick={handleResetCamera}
-          className="bg-[#333] text-white px-4 py-2 rounded shadow hover:bg-[#444]"
-        >
-          Reset View
-        </button>
-        
-        <button
-          onClick={handleLoadPreset}
-          className="bg-[#333] text-white px-4 py-2 rounded shadow hover:bg-[#444]"
-        >
-          Load Preset
-        </button>
-        <button
-          onClick={handleClearLocalStorage}
-          className="bg-[#c92a2a] text-white px-4 py-2 rounded shadow hover:bg-[#a61e1e]"
-        >
-          Clear Data
-        </button>
-      </div> */}
       <ViewToggle className="w-" listView={listView} setListView={setListView} />
       <div className="fixed top-16 lg:top-4 left-4 z-50 lg:z-50 flex flex-col items-start gap-4 w-full">
         <SearchBar 
@@ -277,7 +247,7 @@ function App() {
         visible={filtersVisible}
       />
       {listView ? (
-        <div className="mt-28 w-full max-w-full lg:max-w-[420px] lg:mt-12 lg:px-4 lg:py-6 overflow-y-auto flex flex-col items-center max-h-[65vh] lg:min-h-screen overflow-y-auto">
+        <div className="lg:mx-auto mt-28 w-full max-w-full lg:max-w-[420px] lg:mt-12 lg:py-6 overflow-y-auto flex flex-col items-center max-h-[65vh] lg:min-h-screen overflow-y-auto">
           {filteredGraphData.nodes.map((node) => (
             <div
               key={node.id}
@@ -368,23 +338,6 @@ function App() {
         node={hoveredNode} 
         pos={hoverPos} 
       />
-      {/* <NodeForm onNewNode={handleNewNode} /> */}
-      {/* {isNodeFormOpen && (
-        <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center">
-          <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-2xl w-full max-w-md">
-            <div className="flex justify-end">
-              <button
-                onClick={() => setIsNodeFormOpen(false)}
-                className="text-[#868686] hover:text-white text-lg font-light leading-none"
-                aria-label="Close"
-              >
-              &times;
-              </button>
-            </div>
-            <NodeForm onNewNode={handleNewNode} onClose={() => setIsNodeFormOpen(false)}/>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 }
