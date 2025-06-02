@@ -12,7 +12,7 @@ const ListCard = ({ node }) => {
 
   return (
     <div
-      className="w-[420px] p-4 bg-[#161616] border-l-[3px] inline-flex flex-col justify-center items-start"
+      className="w-[420px] p-4 opacity-80 hover:opacity-100 bg-[#161616] border-l-[3px] inline-flex flex-col justify-center items-start"
       style={{ borderColor }}
     >
       <div className="self-stretch inline-flex justify-start items-center">

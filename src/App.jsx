@@ -275,11 +275,11 @@ function App() {
         visible={filtersVisible}
       />
       {listView ? (
-        <div className="px-4 py-6 overflow-y-auto flex flex-col items-center">
+        <div className="mt-12 px-4 py-6 overflow-y-auto flex flex-col items-center min-h-screen overflow-y-auto">
           {filteredGraphData.nodes.map((node) => (
             <div
               key={node.id}
-              className="mb-4 w-[420px] cursor-pointer"
+              className="mb-2 w-[420px] cursor-pointer"
               onClick={() => setSelectedNode(node)}
             >
               <ListCard node={node} />
