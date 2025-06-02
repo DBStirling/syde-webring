@@ -8,11 +8,9 @@ To add your site to the webring, you must be a current student or alum of the Sy
 
 ### Step-by-step guide for joining
 1. Log in to your github account and **go to [this repo](https://github.com/DBStirling/syde-webring)**.
-2. **Fork the repo** by clicking the "fork" button at the top-right of the page.
-3. Open your forked copy and **click into the data.json file**.
-4. **Edit the file** directly in your browser by clicking the pencil icon at the top right of the file.
-5. **Scroll to the bottom and prep the file for your information**. Add a comma after the second last curly bracket and create a new line below it.
-6. **Fill out the following template and paste it into the new line**. Make sure to: *copy your skills directly* from the skill list, *update your colour* to match your primary skill group and make your *id number 1 greater than the person before you*.
+2. **Clone the repo** locally with your code editor **OR  edit directly in your browser**.
+3. **Open the file** --> `/public/data.json`
+4. **Add your information**. Scroll to the bottom of the file, and add a new "node". **Use the following template**, and paste it in as another object in the array of nodes. 
 ```
 {
     "id": 1,
@@ -38,6 +36,7 @@ const skillOptions = [
     { label: "Other", skills: ["Business", "VC", "IDK Yet!", "Other"], color: "#868686"  }
 ];
 ```
+5. **Make sure to:** *copy your skills directly* from the skill list, *update your colour* to match your primary skill group and *make your id number 1 greater* than the person before you.**
 
 6. **Scroll down and propose changes**. Below the file, add the following title 'Add [Your Full Name]', then click the green “Propose changes” button.
 
