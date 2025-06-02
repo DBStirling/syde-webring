@@ -61,8 +61,10 @@ function App() {
       // Filter nodes by search
       let nodes = graphData.nodes;
       if (!noSearch) {
+        const search = searchQuery.toLowerCase();
         nodes = nodes.filter(node =>
-          node.fullName.toLowerCase().includes(searchQuery.toLowerCase())
+          node.fullName.toLowerCase().includes(search) ||
+          (node.year && node.year.toString().includes(search))
         );
       }
 
