@@ -12,7 +12,7 @@ To add your site to the webring, you must be a current student or alum of the Sy
 3. Open your forked copy and **click into the data.json file**.
 4. **Edit the file** directly in your browser by clicking the pencil icon at the top right of the file.
 5. **Scroll to the bottom and prep the file for your information**. Add a comma after the second last curly bracket and create a new line below it.
-6. **Fill out the following template and paste it into the new line**. Make sure to: copy your skills directly from the skill list, update your colour to match your primary skill group and make your id number 1 greater than the person before you.
+6. **Fill out the following template and paste it into the new line**. Make sure to: *copy your skills directly* from the skill list, *update your colour* to match your primary skill group and make your *id number 1 greater than the person before you*.
 ```
 {
     "id": 1,
