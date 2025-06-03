@@ -18,7 +18,7 @@ const SkillFilter = ({ skillFilters, setSkillFilters, visible }) => {
   return (
     <div
       className={`
-        fixed top-28 bg-[#333]/10 backdrop-blur lg:bg-none lg:top-20 left-4 z-50 max-h-[20vh] w-[90vw] lg:w-[292px] lg:max-h-none overflow-y-auto
+        fixed top-28 bg-[#333]/10 backdrop-blur lg:backdrop-blur-none lg:bg-[#333]/0 lg:top-20 left-4 z-50 max-h-[20vh] w-[90vw] lg:w-[292px] lg:max-h-none overflow-y-auto
         flex flex-col gap-4 font-light font-space-grotesk
         transition-all duration-500 ease-in-out
         ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3 pointer-events-none'}
