@@ -23,7 +23,6 @@ To add your site to the webring, you must be a current student or alum of the Sy
     },
     "website": "https://davidstirling.me/",
     "bio": "Add a sentence or two here",
-    "color": "#BD17C0"
 }
 ```
 ```
@@ -36,7 +35,7 @@ const skillOptions = [
     { label: "Other", skills: ["Data", "Business", "VC", "IDK Yet!", "Other"], color: "#868686"  }
 ];
 ```
-5. **Make sure to:** *copy your skills directly* from the skill list, *update your colour* to match your primary skill group and *make your id number 1 greater* than the person before you.
+5. **Make sure to:** *copy your skills directly* from the skill list and *make sure your id number 1 greater* than the person before you.
 
 6. **Propose your changes**. If done in your browser, scroll down to the bottom. Below the file, add the following title 'Add [Your Full Name]', then click the green “Propose changes” button. If you're using a code editor, make sure to 
 ```
@@ -47,7 +46,7 @@ git push origin main
 
 7. On github, click the green **Create pull request** button. If forked, this will appear in your forked repository. 
 
-8. **Done!** Wait for your PR to be reviewed and merged if everything looks good (no typos or innappropriate content).
+8. **Done!** Wait for your PR to be reviewed and merged if everything looks good (no typos or inappropriate content).
 
 ## Don't see your skill?
 Follow the steps above to make a pull request and edit the skillOptions.js file to add your own skill. Please only do so if there is a large oversight, like a missing skillset, NOT for similar or synonymous titles (i.e. Product Designer & UX/UI Designer).

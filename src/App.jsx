@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import ForceGraph3D from 'react-force-graph-3d';
 import { generateLinks } from './utils/generateLinks';
 import { getScreenCoordinates } from './utils/flattenTo2d';
+import getNodeColor from './utils/getNodeColor';
 import Sidebar from './components/Sidebar';
 import HoverCard from './components/HoverCard';
 import SearchBar from './components/SearchBar';
@@ -165,7 +166,7 @@ function App() {
     //     });
     // };
 
-    const fallbackColor = '#868686';
+    const fallbackColor = '#555';
 
 // console.log('Filtered nodes:', filteredGraphData.nodes.length);
 // console.log('Filtered links:', filteredGraphData.links.length);
@@ -283,7 +284,7 @@ function App() {
             const isDragged = draggedNode?.id === node.id;
             
             const color = (isHovered || isSelected || isDragged)
-              ? new THREE.Color(node.color)
+              ? new THREE.Color(getNodeColor(node))
               : new THREE.Color(fallbackColor);
 
             const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);

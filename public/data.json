@@ -10,8 +10,7 @@
     "skill3": "Frontend"
     },
     "website": "https://davidstirling.me/",
-    "bio": "basketball and books",
-    "color": "#BD17C0"
+    "bio": "basketball and books"
 },
 {
     "id": 2,
@@ -23,8 +22,7 @@
     "skill3": "Frontend"
     },
     "website": "https://pranavgopinath.com",
-    "bio": "bare tuff",
-    "color": "#8B32EB"
+    "bio": "bare tuff"
 },
 {
     "id": 3,
@@ -36,8 +34,7 @@
     "skill3": "Backend"
     },
     "website": "https://matialee.com/",
-    "bio": "i like movies :)",
-    "color": "#2563EB"
+    "bio": "i like movies :)"
 }
 ],
 "links": []

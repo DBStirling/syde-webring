@@ -1,3 +1,5 @@
+import getNodeColor from '../utils/getNodeColor';
+
 const HoverCard = ({node, pos}) => {
     if (!node) return null;
 
@@ -9,7 +11,7 @@ const HoverCard = ({node, pos}) => {
             transform: 'translateY(-50%)', // center vertically
         }}>
             <div className="pl-4 pr-2 bg-[#333333] rounded-[6px] border-l-[6px] text-base inline-flex font-light justify-start items-center font-space-grotesk"
-                style={{ borderColor: node.color }}>
+                style={{ borderColor: getNodeColor(node) || '#555' }}>
                 <div className="py-2 flex justify-start items-center gap-8">
                     <div className="justify-start text-[#c9c9c9] ">{node.fullName}</div>
                     <div className="justify-start text-[#868686] ">{node.year}</div>

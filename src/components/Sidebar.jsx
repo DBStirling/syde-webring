@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import getNodeColor from '../utils/getNodeColor';
 
 const Sidebar = ({ node, onClose }) => {
   const [visible, setVisible] = useState(false);
@@ -37,7 +38,7 @@ const Sidebar = ({ node, onClose }) => {
 
       <div className="relative py-[40px] lg:py-[68px] flex flex-col gap-10">
         {/* Header */}
-        <div className={`border-l-[6px]`} style={{ borderColor: node.color || '#868686' }}>
+        <div className={`border-l-[6px]`} style={{ borderColor: getNodeColor(node) || '#555' }}>
           <div className="pl-[32px] lg:pl-[64px] flex flex-col gap-[4px] text-[#c9c9c9] w-full font-['Space_Grotesk'] leading-none font-light uppercase">
             <div className="ml-[3px] text-base">{node.fullName?.split(' ')[0]}</div>
             <div className="text-xl">

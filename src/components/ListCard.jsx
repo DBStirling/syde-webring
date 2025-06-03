@@ -1,4 +1,5 @@
 import React from 'react';
+import getNodeColor from '../utils/getNodeColor';
 
 const ListCard = ({ node }) => {
   if (!node) return null;
@@ -8,7 +9,7 @@ const ListCard = ({ node }) => {
   const lastName = rest.join(' ');
   const year = node.year;
   const website = node.website || '';
-  const borderColor = node.color || '#555';
+  const borderColor = getNodeColor(node) || '#555';
 
   return (
     <div
