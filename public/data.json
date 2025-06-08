@@ -35,6 +35,18 @@
     },
     "website": "https://matialee.com/",
     "bio": "i like movies :)"
+},
+{
+    "id": 4,
+    "fullName": "Eric Martin",
+    "year": 2028,
+    "skills": {
+    "skill1": "IDK Yet!",
+    "skill2": "IDK Yet!",
+    "skill3": "IDK Yet!"
+    },
+    "website": "https://ericm.ca/",
+    "bio": "rewatching modern family",
 }
 ],
 "links": []
