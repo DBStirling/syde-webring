@@ -47,6 +47,18 @@
     },
     "website": "https://ericm.ca/",
     "bio": "rewatching modern family"
+},
+{
+    "id": 5,
+    "fullName": "Ammielle Wambo Becker",
+    "year": 2028,
+    "skills": {
+    "skill1": "Data",
+    "skill2": "Product",
+    "skill3": "AI/ML"
+    },
+    "website": "https://www.ammiellewb.com/",
+    "bio": "vroom vroom",
 }
 ],
 "links": []
