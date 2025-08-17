@@ -1,0 +1,168 @@
+name: "Add yourself to the SYDE Webring"
+description: "Submit your info to be added to the web. A maintainer will review."
+title: "New webring submission"
+labels: ["new-node"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for submitting! Please complete all the required fields.
+        Your details will be reviewed before being added, so please don't be a troll.
+
+  - type: input
+    id: full_name
+    attributes:
+      label: Full name
+      placeholder: "Jane Doe"
+    validations:
+      required: true
+
+  - type: input
+    id: year
+    attributes:
+      label: Year (YYYY)
+      placeholder: "2028"
+    validations:
+      required: true
+
+  - type: input
+    id: website
+    attributes:
+      label: Website URL (must start with https://)
+      placeholder: "https://your.site"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: skill1
+    attributes:
+      label: Primary skill
+      options:
+        options:
+        - "UX/UI"
+        - "UXR"
+        - "Graphic"
+        - "Brand"
+        - "Frontend"
+        - "Backend"
+        - "Full Stack"
+        - "AI/ML"
+        - "Quant"
+        - "QA"
+        - "Game Dev"
+        - "SRE"
+        - "Product"
+        - "Project"
+        - "Program"
+        - "CAD/Simulation"
+        - "Manufacturing"
+        - "Materials"
+        - "Automotive"
+        - "Aero"
+        - "Embedded"
+        - "Signals"
+        - "Sensors"
+        - "Robotics"
+        - "Power Systems"
+        - "Communications"
+        - "Data"
+        - "Business"
+        - "VC"
+        - "IDK Yet!"
+        - "Other"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: skill2
+    attributes:
+      label: Secondary skill
+      options:
+        - "UX/UI"
+        - "UXR"
+        - "Graphic"
+        - "Brand"
+        - "Frontend"
+        - "Backend"
+        - "Full Stack"
+        - "AI/ML"
+        - "Quant"
+        - "QA"
+        - "Game Dev"
+        - "SRE"
+        - "Product"
+        - "Project"
+        - "Program"
+        - "CAD/Simulation"
+        - "Manufacturing"
+        - "Materials"
+        - "Automotive"
+        - "Aero"
+        - "Embedded"
+        - "Signals"
+        - "Sensors"
+        - "Robotics"
+        - "Power Systems"
+        - "Communications"
+        - "Data"
+        - "Business"
+        - "VC"
+        - "IDK Yet!"
+        - "Other"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: skill3
+    attributes:
+      label: Tertiary skill
+      options:
+        - "UX/UI"
+        - "UXR"
+        - "Graphic"
+        - "Brand"
+        - "Frontend"
+        - "Backend"
+        - "Full Stack"
+        - "AI/ML"
+        - "Quant"
+        - "QA"
+        - "Game Dev"
+        - "SRE"
+        - "Product"
+        - "Project"
+        - "Program"
+        - "CAD/Simulation"
+        - "Manufacturing"
+        - "Materials"
+        - "Automotive"
+        - "Aero"
+        - "Embedded"
+        - "Signals"
+        - "Sensors"
+        - "Robotics"
+        - "Power Systems"
+        - "Communications"
+        - "Data"
+        - "Business"
+        - "VC"
+        - "IDK Yet!"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: bio
+    attributes:
+      label: Bio (optional)
+      placeholder: "One short sentence about you"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Confirmation
+      options:
+        - label: I confirm this information can be published in the webring.
+          required: true
