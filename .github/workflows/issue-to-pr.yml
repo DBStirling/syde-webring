@@ -129,7 +129,6 @@ jobs:
             };
 
             json.nodes.push(newNode);
-            json.nodes.sort((a, b) => a.fullName.localeCompare(b.fullName));
             const updated = JSON.stringify(json, null, 2) + '\n';
 
             const slug = fullName.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
