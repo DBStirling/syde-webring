@@ -11,7 +11,12 @@ permissions:
 
 jobs:
   make-pr:
-    if: contains(join(github.event.issue.labels.*.name, ','), 'new-node')
+    if: >
+      github.event_name == 'issues' &&
+      (
+        (github.event.action == 'opened' && contains(join(github.event.issue.labels.*.name, ','), 'new-node')) ||
+        (github.event.action == 'labeled' && github.event.label.name == 'new-node')
+      )
     runs-on: ubuntu-latest
 
     steps:
