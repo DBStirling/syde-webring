@@ -2,7 +2,7 @@ name: Issue → PR (Add Node)
 
 on:
   issues:
-    types: [opened, labeled, edited]
+    types: [opened, edited, labeled]
 
 permissions:
   contents: write
@@ -33,160 +33,155 @@ jobs:
       - name: Convert Issue → PR
         uses: actions/github-script@v7
         with:
-          script: |
-            const fs = require('fs');
-            const path = require('path');
+        script: |
+          const fs = require('fs');
+          const path = require('path');
 
-            // ========= CONFIGURE THESE =========
-            const DATA_PATH = 'public/data.json';
-            const BASE_BRANCH = 'main';
-            // ===================================
+          const DATA_PATH = 'public/data.json';
+          const BASE_BRANCH = 'main';
 
-            const body = context.payload.issue.body || '';
+          const body = context.payload.issue.body || '';
 
-            // Helper: extract after "### Label" until next "### " or end
-            const grab = (label) => {
-              const re = new RegExp(`###\\s*${label}\\s*\\n+([\\s\\S]*?)(?=\\n###|$)`, 'i');
-              const m = body.match(re);
-              return m ? m[1].trim() : '';
-            };
+          // Helper to escape any regex metacharacters in a string
+          const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-            const fullName = grab('Full name');
-            const yearStr  = grab('Year \\(YYYY\\)');
-            const website  = grab('Website URL');
-            const skill1   = grab('Primary skill');
-            const skill2   = grab('Secondary skill');
-            const skill3   = grab('Tertiary skill');
-            const bio      = grab('Bio \\(optional\\)');
+          // Extracts text after "### label" up to next "###" or end of file
+          const grab = (label) => {
+            const escapedLabel = escapeRegex(label);
+            const re = new RegExp(`###\\s*${escapedLabel}\\s*\\n+([\\s\\S]*?)(?=\\n###|$)`, 'i');
+            const match = body.match(re);
+            return match ? match[1].trim() : '';
+          };
 
-            // Validation
-            const errors = [];
+          const fullName = grab('Full name');
+          const yearStr  = grab('Year (YYYY)');
+          const website  = grab('Website URL');
+          const skill1   = grab('Primary skill');
+          const skill2   = grab('Secondary skill');
+          const skill3   = grab('Tertiary skill');
+          const bio      = grab('Bio (optional)');
 
-            if (!fullName || fullName.length < 2 || fullName.length > 80) errors.push('Full name must be 2-80 chars.');
-            const year = parseInt(yearStr, 10);
-            if (!Number.isInteger(year) || year < 2000 || year > 2050) errors.push('Year must be a 4-digit year between 2000-2050.');
+          // Validate inputs
+          const errors = [];
 
-            if (!/^https?:\\/\\//i.test(website)) errors.push('Website must start with http:// or https://');
+          if (!fullName || fullName.length < 2 || fullName.length > 80) errors.push('Full name must be 2-80 chars.');
+          const year = parseInt(yearStr, 10);
+          if (!Number.isInteger(year) || year < 2000 || year > 2050) errors.push('Year must be a 4-digit year between 2000–2050.');
 
-            const allowedSkills = [
-              'UX/UI','Product','Frontend','Backend','Full Stack','AI/ML','Data','IDK Yet!'
-            ];
-            const skills = [skill1, skill2, skill3];
-            if (skills.some(s => !allowedSkills.includes(s))) {
-              errors.push('Skills must be chosen from the dropdown options.');
-            }
-            if (new Set(skills).size !== 3) {
-              errors.push('Skills must be unique.');
-            }
+          if (!/^https?:\/\//i.test(website)) errors.push('Website must start with http:// or https://');
 
-            if (errors.length) {
-              core.setFailed('Validation failed:\\n- ' + errors.join('\\n- '));
-              return;
-            }
+          const allowedSkills = [
+            'UX/UI','UXR','Graphic','Brand',
+            'Frontend','Backend','Full Stack','AI/ML','Quant','QA','Game Dev','SRE',
+            'Product','Project','Program',
+            'CAD/Simulation','Manufacturing','Materials','Automotive','Aero',
+            'Embedded','Signals','Sensors','Robotics','Power Systems','Communications',
+            'Data','Business','VC','IDK Yet!','Other'
+          ];
 
-            // Load & update data.json
-            const dataPath = path.join(process.cwd(), DATA_PATH);
-            if (!fs.existsSync(dataPath)) {
-              core.setFailed(`Data file not found at ${DATA_PATH}`);
-              return;
-            }
-            const json = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+          const skills = [skill1, skill2, skill3];
+          if (skills.some(s => !allowedSkills.includes(s))) {
+            errors.push('Skills must be chosen from the dropdown options.');
+          }
+          if (new Set(skills).size !== 3) {
+            errors.push('Skills must be unique.');
+          }
 
-            // Duplicate checks (normalize)
-            const norm = s => (s || '').trim().toLowerCase().replace(/\\/$/, '');
-            const nameNorm = norm(fullName);
-            const siteNorm = norm(website);
+          if (errors.length) {
+            core.setFailed('Validation failed:\n- ' + errors.join('\n- '));
+            return;
+          }
 
-            const dup = (json.nodes || []).some(n =>
-              norm(n.fullName) === nameNorm || norm(n.website) === siteNorm
-            );
-            if (dup) {
-              core.setFailed('Duplicate detected: fullName or website already exists.');
-              return;
-            }
+          // Load and parse existing data
+          const dataPath = path.join(process.cwd(), DATA_PATH);
+          if (!fs.existsSync(dataPath)) {
+            core.setFailed(`Data file not found at ${DATA_PATH}`);
+            return;
+          }
+          const json = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 
-            // Next numeric id
-            const nextId = (json.nodes || []).length
-              ? Math.max(...json.nodes.map(n => Number(n.id) || 0)) + 1
-              : 1;
+          const norm = s => (s || '').trim().toLowerCase().replace(/\/$/, '');
+          const nameNorm = norm(fullName);
+          const siteNorm = norm(website);
 
-            // Build new node
-            const newNode = {
-              id: nextId,
-              fullName,
-              year,
-              skills: { skill1, skill2, skill3 },
-              website,
-              bio: bio || ''
-            };
+          const dup = (json.nodes || []).some(n =>
+            norm(n.fullName) === nameNorm || norm(n.website) === siteNorm
+          );
+          if (dup) {
+            core.setFailed('Duplicate detected: fullName or website already exists.');
+            return;
+          }
 
-            json.nodes = json.nodes || [];
-            json.nodes.push(newNode);
+          const nextId = (json.nodes || []).length
+            ? Math.max(...json.nodes.map(n => Number(n.id) || 0)) + 1
+            : 1;
 
-            // Stable sort by fullName (optional), then pretty print
-            json.nodes.sort((a, b) => a.fullName.localeCompare(b.fullName));
+          const newNode = {
+            id: nextId,
+            fullName,
+            year,
+            skills: { skill1, skill2, skill3 },
+            website,
+            bio: bio || ''
+          };
 
-            const updated = JSON.stringify(json, null, 2) + '\\n';
+          json.nodes.push(newNode);
+          json.nodes.sort((a, b) => a.fullName.localeCompare(b.fullName));
+          const updated = JSON.stringify(json, null, 2) + '\n';
 
-            // Prepare branch name from name slug
-            const slug = fullName.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
-            const branch = `add/${slug}-${Date.now()}`;
+          const slug = fullName.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+          const branch = `add/${slug}-${Date.now()}`;
 
-            // Get base branch SHA
-            const { data: base } = await github.rest.repos.getBranch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              branch: BASE_BRANCH
-            });
+          const { data: base } = await github.rest.repos.getBranch({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            branch: BASE_BRANCH
+          });
 
-            // Create branch
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: `refs/heads/${branch}`,
-              sha: base.commit.sha
-            });
+          await github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: `refs/heads/${branch}`,
+            sha: base.commit.sha
+          });
 
-            // Read current file SHA to update
-            const { data: fileData } = await github.rest.repos.getContent({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              path: DATA_PATH,
-              ref: BASE_BRANCH
-            });
+          const { data: fileData } = await github.rest.repos.getContent({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            path: DATA_PATH,
+            ref: BASE_BRANCH
+          });
 
-            // Commit updated file to new branch
-            await github.rest.repos.createOrUpdateFileContents({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              path: DATA_PATH,
-              message: `feat: add ${fullName} to webring`,
-              content: Buffer.from(updated, 'utf8').toString('base64'),
-              branch,
-              sha: Array.isArray(fileData) ? undefined : fileData.sha
-            });
+          await github.rest.repos.createOrUpdateFileContents({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            path: DATA_PATH,
+            message: `feat: add ${fullName} to webring`,
+            content: Buffer.from(updated, 'utf8').toString('base64'),
+            branch,
+            sha: Array.isArray(fileData) ? undefined : fileData.sha
+          });
 
-            // Open PR
-            const pr = await github.rest.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              head: branch,
-              base: BASE_BRANCH,
-              title: `Add ${fullName} (${year})`,
-              body: [
-                'Auto-generated from Issue Form.',
-                '',
-                'Proposed node:',
-                '```json',
-                JSON.stringify(newNode, null, 2),
-                '```'
-              ].join('\\n')
-            });
+          const pr = await github.rest.pulls.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            head: branch,
+            base: BASE_BRANCH,
+            title: `Add ${fullName} (${year})`,
+            body: [
+              'Auto-generated from Issue Form.',
+              '',
+              'Proposed node:',
+              '```json',
+              JSON.stringify(newNode, null, 2),
+              '```'
+            ].join('\n')
+          });
 
-            // Comment back on the issue with the PR link
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: `Thanks! Opened PR #${pr.data.number} for review.`
-            });
+          await github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            body: `Thanks! Opened PR #${pr.data.number} for review.`
+          });
+
