@@ -55,7 +55,7 @@ jobs:
 
             const fullName = grab('Full name');
             const yearStr  = grab('Year (YYYY)');
-            let website  = grab('Website URL');
+            const website  = grab('Website URL');
             const skill1   = grab('Primary skill');
             const skill2   = grab('Secondary skill');
             const skill3   = grab('Tertiary skill');
@@ -70,7 +70,6 @@ jobs:
 
             // TEMP: not invalidating incorrect format, but just adding an error
             if (!/^https?:\/\//i.test(website)) {
-              website = ''; // fallback value
               core.warning('Website is missing or not formatted correctly.');
             }
 
