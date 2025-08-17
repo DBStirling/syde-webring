@@ -2,7 +2,7 @@ name: Issue → PR (Add Node)
 
 on:
   issues:
-    types: [opened, edited, labeled]
+    types: [opened, labeled, edited]
 
 permissions:
   contents: write
@@ -15,8 +15,10 @@ jobs:
       github.event_name == 'issues' &&
       (
         (github.event.action == 'opened' && contains(join(github.event.issue.labels.*.name, ','), 'new-node')) ||
-        (github.event.action == 'labeled' && github.event.label.name == 'new-node')
+        (github.event.action == 'labeled' && github.event.label.name == 'new-node') ||
+        (github.event.action == 'edited' && contains(join(github.event.issue.labels.*.name, ','), 'new-node'))
       )
+
     runs-on: ubuntu-latest
 
     steps:
