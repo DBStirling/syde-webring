@@ -68,7 +68,8 @@ jobs:
             const year = parseInt(yearStr, 10);
             if (!Number.isInteger(year) || year < 2000 || year > 2050) errors.push('Year must be a 4-digit year between 2000–2050.');
 
-            if (!/^https?:\/\//i.test(website.trim())) errors.push('Website must start with http:// or https://');
+            // TEMP: Commented out for testing input issues
+            // if (!/^https?:\/\//i.test(website.trim())) errors.push('Website must start with http:// or https://');
 
             const allowedSkills = [
               'UX/UI','UXR','Graphic','Brand',
