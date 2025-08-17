@@ -12,6 +12,17 @@ on:
       website:
         description: 'Website URL'
         required: true
+      david_selection:
+        description: 'David selection (optional)'
+        required: false
+        default: ''
+        type: choice
+        options:
+          - 'None'
+          - 'David'
+          - 'David + 1'
+          - 'David + 2'
+          - 'David + 3'
       skill1:
         description: 'Primary skill'
         required: true
