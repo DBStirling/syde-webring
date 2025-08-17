@@ -1,67 +1,77 @@
 {
-"nodes": [
-{
-    "id": 1,
-    "fullName": "David Stirling",
-    "year": 2028,
-    "skills": {
-    "skill1": "UX/UI",
-    "skill2": "Product",
-    "skill3": "Frontend"
+  "nodes": [
+    {
+      "id": 1,
+      "fullName": "David Stirling",
+      "year": 2028,
+      "skills": {
+        "skill1": "UX/UI",
+        "skill2": "Product",
+        "skill3": "Frontend"
+      },
+      "website": "https://davidstirling.me/",
+      "bio": "basketball and books"
     },
-    "website": "https://davidstirling.me/",
-    "bio": "basketball and books"
-},
-{
-    "id": 2,
-    "fullName": "Pranav Gopinath",
-    "year": 2028,
-    "skills": {
-    "skill1": "Full Stack",
-    "skill2": "Backend",
-    "skill3": "Frontend"
+    {
+      "id": 2,
+      "fullName": "Pranav Gopinath",
+      "year": 2028,
+      "skills": {
+        "skill1": "Full Stack",
+        "skill2": "Backend",
+        "skill3": "Frontend"
+      },
+      "website": "https://pranavgopinath.com",
+      "bio": "happy camper"
     },
-    "website": "https://pranavgopinath.com",
-    "bio": "happy camper"
-},
-{
-    "id": 3,
-    "fullName": "Matia Lee",
-    "year": 2028,
-    "skills": {
-    "skill1": "Full Stack",
-    "skill2": "AI/ML",
-    "skill3": "Backend"
+    {
+      "id": 3,
+      "fullName": "Matia Lee",
+      "year": 2028,
+      "skills": {
+        "skill1": "Full Stack",
+        "skill2": "AI/ML",
+        "skill3": "Backend"
+      },
+      "website": "https://matialee.com/",
+      "bio": "i like movies :)"
     },
-    "website": "https://matialee.com/",
-    "bio": "i like movies :)"
-},
-{
-    "id": 4,
-    "fullName": "Eric Martin",
-    "year": 2028,
-    "skills": {
-    "skill1": "Full Stack",
-    "skill2": "Product",
-    "skill3": "IDK Yet!"
+    {
+      "id": 4,
+      "fullName": "Eric Martin",
+      "year": 2028,
+      "skills": {
+        "skill1": "Full Stack",
+        "skill2": "Product",
+        "skill3": "IDK Yet!"
+      },
+      "website": "https://ericm.ca/",
+      "bio": "rewatching modern family"
     },
-    "website": "https://ericm.ca/",
-    "bio": "rewatching modern family"
-},
-{
-    "id": 5,
-    "fullName": "Ammielle Wambo Becker",
-    "year": 2028,
-    "skills": {
-    "skill1": "Data",
-    "skill2": "Product",
-    "skill3": "AI/ML"
+    {
+      "id": 5,
+      "fullName": "Ammielle Wambo Becker",
+      "year": 2028,
+      "skills": {
+        "skill1": "Data",
+        "skill2": "Product",
+        "skill3": "AI/ML"
+      },
+      "website": "https://www.ammiellewb.com/",
+      "bio": "vroom vroom"
     },
-    "website": "https://www.ammiellewb.com/",
-    "bio": "vroom vroom"
+    {
+      "id": 6,
+      "fullName": "testing JSON",
+      "year": 2031,
+      "skills": {
+        "skill1": "UX/UI",
+        "skill2": "Aero",
+        "skill3": "Embedded"
+      },
+      "website": "",
+      "bio": "(will removed)"
+    }
+  ],
+  "links": []
 }
-],
-"links": []
-}
-
-
