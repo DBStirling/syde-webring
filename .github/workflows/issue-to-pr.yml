@@ -48,14 +48,18 @@ jobs:
             // Extracts text after "### label" up to next "###" or end of file
             const grab = (label) => {
               const escapedLabel = escapeRegex(label);
-              const re = new RegExp(`###\\s*${escapedLabel}\\s*\\n+([\\s\\S]*?)(?=\\n###|$)`, 'i');
+              
+              // Match inline (### Label some text) OR block (### Label\nsome text)
+              const re = new RegExp(`###\\s*${escapedLabel}\\s*(?:\\n|\\s)+([\\s\\S]*?)(?=\\n###|$)`, 'i');
+              
               const match = body.match(re);
               return match ? match[1].trim() : '';
             };
 
             const fullName = grab('Full name');
             const yearStr  = grab('Year (YYYY)');
-            const website = "http://bruh.com"
+            let website  = grab('Website URL');
+            core.info('Website grab: ' + website);
             const skill1   = grab('Primary skill');
             const skill2   = grab('Secondary skill');
             const skill3   = grab('Tertiary skill');
