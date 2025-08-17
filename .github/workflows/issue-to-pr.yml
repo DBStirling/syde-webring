@@ -55,7 +55,7 @@ jobs:
 
             const fullName = grab('Full name');
             const yearStr  = grab('Year (YYYY)');
-            const website  = grab('Website URL');
+            let website  = grab('Website URL');
             const skill1   = grab('Primary skill');
             const skill2   = grab('Secondary skill');
             const skill3   = grab('Tertiary skill');
