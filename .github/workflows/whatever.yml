@@ -95,9 +95,11 @@ jobs:
             exit 1
           fi
 
-      - name: Append node to public/data.json
+            - name: Append node to public/data.json
         id: append
         run: |
+          set -euo pipefail
+
           FULL_NAME="${{ github.event.inputs.fullName }}"
           YEAR="${{ github.event.inputs.year }}"
           WEBSITE="${{ github.event.inputs.website }}"
@@ -106,12 +108,19 @@ jobs:
           SKILL3="${{ github.event.inputs.skill3 }}"
           BIO="${{ github.event.inputs.bio }}"
 
-          # Compute next id = (max existing id) + 1, or 1 if none
-          NEXT_ID=$(jq '[.nodes[].id] | (max? // 0) + 1' public/data.json)
+          # Compute next id = max(tonumber(id)) + 1 (handles string ids too)
+          NEXT_ID="$(jq -r '([.nodes[].id | tonumber] | (max? // 0)) + 1' public/data.json)"
 
-          # Build new node JSON
-          NEW_NODE=$(jq -n \
-            --argjson id "$NEXT_ID" \
+          # Optional: sanity-check values
+          case "$NEXT_ID" in (''|*[!0-9]*) echo "Bad NEXT_ID: $NEXT_ID"; exit 1;; esac
+          # If YEAR must be numeric, enforce it; otherwise, coerce inside jq with try/catch
+          if ! printf '%s' "$YEAR" | grep -Eq '^[0-9]{4}$'; then
+            echo "Warning: YEAR \"$YEAR\" is not a 4-digit number; will set year=null in JSON."
+          fi
+
+          # Build new node JSON (pass all args as strings; cast inside jq)
+          NEW_NODE="$(jq -n \
+            --arg id "$NEXT_ID" \
             --arg fullName "$FULL_NAME" \
             --arg year "$YEAR" \
             --arg website "$WEBSITE" \
@@ -120,32 +129,38 @@ jobs:
             --arg skill3 "$SKILL3" \
             --arg bio "${BIO:-}" \
             '{
-              id: $id,
+              id: ($id|tonumber),
               fullName: $fullName,
-              year: ($year|tonumber),
+              year: (try ($year|tonumber) catch null),
               website: ($website|tostring),
               skills: { skill1: $skill1, skill2: $skill2, skill3: $skill3 },
               bio: $bio
-            }')
+            }'
+          )"
 
-          # Append to public/data.json (preserving other keys like links, etc.)
-          TMP=$(mktemp)
+          # Append to public/data.json
+          TMP="$(mktemp)"
           jq --argjson newNode "$NEW_NODE" '.nodes += [$newNode]' public/data.json > "$TMP"
           mv "$TMP" public/data.json
 
-          # Expose for later steps
-          echo "new_node_json<<EOF" >> $GITHUB_OUTPUT
-          echo "$NEW_NODE" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-          echo "next_id=$NEXT_ID" >> $GITHUB_OUTPUT
+          # Outputs for later steps
+          {
+            echo "new_node_json<<EOF"
+            echo "$NEW_NODE"
+            echo "EOF"
+            echo "next_id=$NEXT_ID"
+          } >> "$GITHUB_OUTPUT"
+
+          # Debug (optional)
+          jq -r '.nodes[-1]' public/data.json
 
       - name: Commit and push changes
         run: |
           git add public/data.json
           git commit -m "feat: add ${{ github.event.inputs.fullName }} (${{ github.event.inputs.year }}) [id ${{ steps.append.outputs.next_id }}]"
           git push origin "$BRANCH_NAME"
-      - name: Create Pull Request
       
+      - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
           title: "Add ${{ github.event.inputs.fullName }} (${{ github.event.inputs.year }})"
