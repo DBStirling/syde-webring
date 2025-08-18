@@ -52,12 +52,12 @@ on:
         description: 'Secondary interest'
         required: true
         type: choice
-        options: *interest
+        options: *Interest
       interest_3:
         description: 'Tertiary interest'
         required: true
         type: choice
-        options: *interest
+        options: *Interest
       bio:
         description: 'Bio (optional)'
         required: false
