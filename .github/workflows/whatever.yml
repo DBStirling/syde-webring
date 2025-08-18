@@ -61,6 +61,7 @@ on:
       bio:
         description: 'Bio (optional)'
         required: false
+
 jobs:
   add-node:
     runs-on: ubuntu-latest
