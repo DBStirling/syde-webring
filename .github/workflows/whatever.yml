@@ -153,16 +153,11 @@ jobs:
 
           # Debug (optional)
           jq -r '.nodes[-1]' public/data.json
-
-      - name: Commit and push changes
-        run: |
-          git add public/data.json
-          git commit -m "feat: add ${{ github.event.inputs.fullName }} (${{ github.event.inputs.year }}) [id ${{ steps.append.outputs.next_id }}]"
-          git push origin "$BRANCH_NAME"
-      
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v6
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           title: "Add ${{ github.event.inputs.fullName }} (${{ github.event.inputs.year }})"
           body: |
             Auto-generated from manual workflow_dispatch.
@@ -172,4 +167,4 @@ jobs:
             ${{ steps.append.outputs.new_node_json }}
             ```
           base: main
-          head: ${{ env.BRANCH_NAME }}
+          branch: ${{ env.BRANCH_NAME }}  # <-- use 'branch', not 'head'
