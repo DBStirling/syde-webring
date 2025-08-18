@@ -59,18 +59,6 @@
       },
       "website": "https://www.ammiellewb.com/",
       "bio": "vroom vroom"
-    },
-    {
-      "id": 6,
-      "fullName": "testy testerson2",
-      "year": 2033,
-      "website": "https://www.nike.com/",
-      "interests": {
-        "interest_1": "Aero",
-        "interest_2": "Manufacturing",
-        "interest_3": "UX/UI"
-      },
-      "bio": "PLEASE WORK LMAO"
     }
   ],
   "links": []
