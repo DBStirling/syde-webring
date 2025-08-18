@@ -95,7 +95,7 @@ jobs:
             exit 1
           fi
 
-            - name: Append node to public/data.json
+      - name: Append node to public/data.json
         id: append
         run: |
           set -euo pipefail
