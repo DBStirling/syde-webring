@@ -204,7 +204,7 @@ function App() {
           rel="noopener noreferrer"
           className="flex items-center gap-2 px-4 py-2 rounded hover:bg-[#2a2a2a] transition-all"
         >
-          get featured
+          add yourself
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
