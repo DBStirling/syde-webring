@@ -71,6 +71,18 @@
         "skill3": "UX/UI"
       },
       "bio": ""
+    },
+    {
+      "id": 7,
+      "fullName": "Testing Testerson",
+      "year": 2005,
+      "website": "www.google.com",
+      "skills": {
+        "skill1": "UX/UI",
+        "skill2": "UXR",
+        "skill3": "Graphic"
+      },
+      "bio": "hello world!"
     }
   ],
   "links": []
