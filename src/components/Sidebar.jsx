@@ -65,7 +65,7 @@ const Sidebar = ({ node, onClose }) => {
           {/* <div className="h-0 border border-[#333]" /> */}
 
           <div className="flex flex-col gap-6">
-            {Object.entries(node.skills || {}).map(([label, value], idx) =>
+            {Object.entries(node.interests || {}).map(([label, value], idx) =>
               value ? (
                 <div key={idx} className="flex flex-col w-fit">
                   <div className="text-xs text-[#3e3e3e] font-light">{label.toUpperCase()}</div>

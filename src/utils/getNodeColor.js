@@ -1,11 +1,12 @@
-import skillOptions from '../data/skillOptions';
+import interestOptions from '../data/interestOptions';
 
 const getNodeColor = (node) => {
-    const primarySkill = node.skills?.skill1;
-    if (!primarySkill) return '#333333'; // default fallback color
+    console.log(node)
+    const primaryInterest = node.interests?.interest_1;
+    if (!primaryInterest) return '#333333'; // default fallback color
 
-    const group = skillOptions.find(group => group.skills.includes(primarySkill));
-    return group ? group.color : '#333333'; // fallback if skill not found
+    const group = interestOptions.find(group => group.interests.includes(primaryInterest));
+    return group ? group.color : '#333333'; // fallback if interest not found
 };
 
 export default getNodeColor;

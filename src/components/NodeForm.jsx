@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import skillOptions from '../data/skillOptions.js';
+import interestOptions from '../data/interestOptions.js';
 
-const allSkills = skillOptions.flatMap(category => category.skills);
+const allInterests = interestOptions.flatMap(category => category.interests);
 
 const NodeForm = ({ onNewNode, onClose }) => {
     const [formData, setFormData] = useState({
@@ -10,26 +10,26 @@ const NodeForm = ({ onNewNode, onClose }) => {
         year: '',
         portfolio: '',
         bio: '',
-        skills: { primary: '', secondary: '', tertiary: '' },
+        interests: { primary: '', secondary: '', tertiary: '' },
         color: '',
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (['primary', 'secondary', 'tertiary'].includes(name)) {
-        const updatedSkills = {
-            ...formData.skills,
+        const updatedInterests = {
+            ...formData.interests,
             [name]: value,
         };
 
         const detectedColor =
-            skillOptions.find(category =>
-            category.skills.includes(updatedSkills.primary)
+            interestOptions.find(category =>
+            category.interests.includes(updatedInterests.primary)
             )?.color || '';
 
         setFormData({
             ...formData,
-            skills: updatedSkills,
+            interests: updatedInterests,
             color: detectedColor,
         });
         } else {
@@ -51,13 +51,13 @@ const NodeForm = ({ onNewNode, onClose }) => {
         year: '',
         portfolio: '',
         bio: '',
-        skills: { primary: '', secondary: '', tertiary: '' },
+        interests: { primary: '', secondary: '', tertiary: '' },
         color: '',
         });
     };
 
     const getFilteredOptions = (excludeList) => {
-        return allSkills.filter(skill => !excludeList.includes(skill));
+        return allInterests.filter(interest => !excludeList.includes(interest));
     };
 
     return (
@@ -111,48 +111,48 @@ const NodeForm = ({ onNewNode, onClose }) => {
         </div>
 
         <div className="flex flex-col gap-2">
-            <label className="text-sm text-[#868686]">Primary Skill</label>
+            <label className="text-sm text-[#868686]">Primary Interest</label>
             <select
             name="primary"
-            value={formData.skills.primary}
+            value={formData.interests.primary}
             onChange={handleChange}
             required
             className="bg-[#2a2a2a] p-2 rounded text-white outline-none"
             >
-            <option value="">Select Primary Skill</option>
-            {getFilteredOptions([formData.skills.secondary, formData.skills.tertiary]).map(skill => (
-                <option key={skill} value={skill}>
-                {skill}
+            <option value="">Select Primary Interest</option>
+            {getFilteredOptions([formData.interests.secondary, formData.interests.tertiary]).map(interest => (
+                <option key={interest} value={interest}>
+                {interest}
                 </option>
             ))}
             </select>
 
-            <label className="text-sm text-[#868686]">Secondary Skill</label>
+            <label className="text-sm text-[#868686]">Secondary Interest</label>
             <select
             name="secondary"
-            value={formData.skills.secondary}
+            value={formData.interests.secondary}
             onChange={handleChange}
             className="bg-[#2a2a2a] p-2 rounded text-white outline-none"
             >
-            <option value="">Select Secondary Skill</option>
-            {getFilteredOptions([formData.skills.primary, formData.skills.tertiary]).map(skill => (
-                <option key={skill} value={skill}>
-                {skill}
+            <option value="">Select Secondary Interest</option>
+            {getFilteredOptions([formData.interests.primary, formData.interests.tertiary]).map(interest => (
+                <option key={interest} value={interest}>
+                {interest}
                 </option>
             ))}
             </select>
 
-            <label className="text-sm text-[#868686]">Tertiary Skill</label>
+            <label className="text-sm text-[#868686]">Tertiary Interest</label>
             <select
             name="tertiary"
-            value={formData.skills.tertiary}
+            value={formData.interests.tertiary}
             onChange={handleChange}
             className="bg-[#2a2a2a] p-2 rounded text-white outline-none"
             >
-            <option value="">Select Tertiary Skill</option>
-            {getFilteredOptions([formData.skills.primary, formData.skills.secondary]).map(skill => (
-                <option key={skill} value={skill}>
-                {skill}
+            <option value="">Select Tertiary Interest</option>
+            {getFilteredOptions([formData.interests.primary, formData.interests.secondary]).map(interest => (
+                <option key={interest} value={interest}>
+                {interest}
                 </option>
             ))}
             </select>

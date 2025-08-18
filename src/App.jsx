@@ -6,7 +6,7 @@ import getNodeColor from './utils/getNodeColor';
 import Sidebar from './components/Sidebar';
 import HoverCard from './components/HoverCard';
 import SearchBar from './components/SearchBar';
-import SkillFilter from './components/SkillFilter';
+import InterestFilter from './components/InterestFilter';
 import Loading from './components/Loading';
 import ViewToggle from './components/ViewToggle';
 import ListCard from './components/ListCard';
@@ -22,7 +22,7 @@ function App() {
     const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
     const [filteredGraphData, setFilteredGraphData] = useState({ nodes: [], links: [] });
     const [searchQuery, setSearchQuery] = useState('');
-    const [skillFilters, setSkillFilters] = useState([]);
+    const [interestFilters, setInterestFilters] = useState([]);
     const [filtersVisible, setFiltersVisible] = useState(false);
     const [listView, setListView] = useState(false);
 
@@ -53,7 +53,7 @@ function App() {
     useEffect(() => {
       // Base case: no filters = show everything
       const noSearch = !searchQuery.trim();
-      const noSkills = skillFilters.length === 0;
+      const noInterests = interestFilters.length === 0;
 
       // Filter nodes by search
       let nodes = graphData.nodes;
@@ -65,11 +65,11 @@ function App() {
         );
       }
 
-      // Filter nodes by skill match (inclusive)
-      if (!noSkills) {
+      // Filter nodes by interest match (inclusive)
+      if (!noInterests) {
         nodes = nodes.filter(node => {
-          const nodeSkills = Object.values(node.skills || {});
-          return skillFilters.some(filter => nodeSkills.includes(filter));
+          const nodeInterests = Object.values(node.interests || {});
+          return interestFilters.some(filter => nodeInterests.includes(filter));
         });
       }
 
@@ -85,7 +85,7 @@ function App() {
       });
 
       setFilteredGraphData({ nodes, links });
-    }, [searchQuery, skillFilters, graphData]);
+    }, [searchQuery, interestFilters, graphData]);
 
 
 
@@ -232,9 +232,9 @@ function App() {
           SYDE{"\n"}WEBRING
         </div>
       </div>
-      <SkillFilter 
-        skillFilters={skillFilters} 
-        setSkillFilters={setSkillFilters} 
+      <InterestFilter 
+        interestFilters={interestFilters} 
+        setInterestFilters={setInterestFilters} 
         visible={filtersVisible}
       />
       {listView ? (

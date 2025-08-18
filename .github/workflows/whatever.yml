@@ -12,11 +12,11 @@ on:
       website:
         description: 'Website URL'
         required: true
-      skill1:
-        description: 'Primary skill'
+      interest_1:
+        description: 'Primary interest'
         required: true
         type: choice
-        options: &skills
+        options: &Interests
           - UX/UI
           - UXR
           - Graphic
@@ -48,16 +48,16 @@ on:
           - VC
           - IDK Yet!
           - Other
-      skill2:
-        description: 'Secondary skill'
+      interest_2:
+        description: 'Secondary interest'
         required: true
         type: choice
-        options: *skills
-      skill3:
-        description: 'Tertiary skill'
+        options: *interest
+      interest_3:
+        description: 'Tertiary interest'
         required: true
         type: choice
-        options: *skills
+        options: *interest
       bio:
         description: 'Bio (optional)'
         required: false
@@ -89,9 +89,9 @@ jobs:
           FULL_NAME="${{ github.event.inputs.fullName }}"
           YEAR="${{ github.event.inputs.year }}"
           WEBSITE="${{ github.event.inputs.website }}"
-          SKILL1="${{ github.event.inputs.skill1 }}"
-          SKILL2="${{ github.event.inputs.skill2 }}"
-          SKILL3="${{ github.event.inputs.skill3 }}"
+          INTEREST_1="${{ github.event.inputs.interest_1 }}"
+          INTEREST_2="${{ github.event.inputs.interest_2 }}"
+          INTEREST_3="${{ github.event.inputs.interest_3 }}"
           BIO="${{ github.event.inputs.bio }}"
 
           # Compute next id = max(tonumber(id)) + 1 (handles string ids too)
@@ -111,16 +111,16 @@ jobs:
             --arg fullName "$FULL_NAME" \
             --arg year "$YEAR" \
             --arg website "$WEBSITE" \
-            --arg skill1 "$SKILL1" \
-            --arg skill2 "$SKILL2" \
-            --arg skill3 "$SKILL3" \
+            --arg interest_1 "$INTEREST_1" \
+            --arg interest_2 "$INTEREST_2" \
+            --arg interest_3 "$INTEREST_3" \
             --arg bio "${BIO:-}" \
             '{
               id: ($id|tonumber),
               fullName: $fullName,
               year: (try ($year|tonumber) catch null),
               website: ($website|tostring),
-              skills: { skill1: $skill1, skill2: $skill2, skill3: $skill3 },
+              interests: { interest_1: $interest_1, interest_2: $interest_2, interest_3: $interest_3 },
               bio: $bio
             }'
           )"

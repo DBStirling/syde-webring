@@ -1,17 +1,17 @@
 import React from 'react';
-import skillOptions from '../data/skillOptions';
+import interestOptions from '../data/interestOptions';
 
-const getSkillColor = (skill) => {
-  const group = skillOptions.find(group => group.skills.includes(skill));
+const getInterestColor = (interest) => {
+  const group = interestOptions.find(group => group.interests.includes(interest));
   return group ? group.color : '#555';
 };
 
-const SkillFilter = ({ skillFilters, setSkillFilters, visible }) => {
-  const toggleSkill = (skill) => {
-    if (skillFilters.includes(skill)) {
-      setSkillFilters(skillFilters.filter(s => s !== skill));
-    } else if (skillFilters.length < 3) {
-      setSkillFilters([...skillFilters, skill]);
+const InterestFilter = ({ interestFilters, setInterestFilters, visible }) => {
+  const toggleInterest = (interest) => {
+    if (interestFilters.includes(interest)) {
+      setInterestFilters(interestFilters.filter(s => s !== interest));
+    } else if (interestFilters.length < 3) {
+      setInterestFilters([...interestFilters, interest]);
     }
   };
 
@@ -24,15 +24,15 @@ const SkillFilter = ({ skillFilters, setSkillFilters, visible }) => {
         ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3 pointer-events-none'}
       `}
     >
-      {skillOptions.map(group => (
+      {interestOptions.map(group => (
         <div key={group.label} className="flex flex-wrap gap-2">
-          {group.skills.map(skill => {
-            const baseColor = getSkillColor(skill);
-            const isSelected = skillFilters.includes(skill);
+          {group.interests.map(interest => {
+            const baseColor = getInterestColor(interest);
+            const isSelected = interestFilters.includes(interest);
             return (
               <button
-                key={skill}
-                onClick={() => toggleSkill(skill)}
+                key={interest}
+                onClick={() => toggleInterest(interest)}
                 className="text-xs lg:text-sm px-3 py-1 rounded-[4px] border text-[#868686] transition-all duration-200"
                 style={{
                   backgroundColor: isSelected ? baseColor : '#161616',
@@ -53,7 +53,7 @@ const SkillFilter = ({ skillFilters, setSkillFilters, visible }) => {
                   }
                 }}
               >
-                {skill}
+                {interest}
               </button>
             );
           })}
@@ -63,4 +63,4 @@ const SkillFilter = ({ skillFilters, setSkillFilters, visible }) => {
   );
 };
 
-export default SkillFilter;
+export default InterestFilter;

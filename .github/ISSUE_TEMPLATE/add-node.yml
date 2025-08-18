@@ -34,9 +34,9 @@ body:
       required: true
 
   - type: dropdown
-    id: skill1
+    id: interest1
     attributes:
-      label: Primary skill
+      label: Primary interest
       options:
       - "UX/UI"
       - "UXR"
@@ -73,9 +73,9 @@ body:
       required: true
 
   - type: dropdown
-    id: skill2
+    id: interest2
     attributes:
-      label: Secondary skill
+      label: Secondary interest
       options:
         - "UX/UI"
         - "UXR"
@@ -112,9 +112,9 @@ body:
       required: true
 
   - type: dropdown
-    id: skill3
+    id: interest3
     attributes:
-      label: Tertiary skill
+      label: Tertiary interest
       options:
         - "UX/UI"
         - "UXR"

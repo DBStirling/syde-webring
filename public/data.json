@@ -4,10 +4,10 @@
       "id": 1,
       "fullName": "David Stirling",
       "year": 2028,
-      "skills": {
-        "skill1": "UX/UI",
-        "skill2": "Product",
-        "skill3": "Frontend"
+      "interests": {
+        "interest_1": "UX/UI",
+        "interest_2": "Product",
+        "interest_3": "Frontend"
       },
       "website": "https://davidstirling.me/",
       "bio": "basketball and books"
@@ -16,10 +16,10 @@
       "id": 2,
       "fullName": "Pranav Gopinath",
       "year": 2028,
-      "skills": {
-        "skill1": "Full Stack",
-        "skill2": "Backend",
-        "skill3": "Frontend"
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "Backend",
+        "interest_3": "Frontend"
       },
       "website": "https://pranavgopinath.com",
       "bio": "happy camper"
@@ -28,10 +28,10 @@
       "id": 3,
       "fullName": "Matia Lee",
       "year": 2028,
-      "skills": {
-        "skill1": "Full Stack",
-        "skill2": "AI/ML",
-        "skill3": "Product"
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "AI/ML",
+        "interest_3": "Product"
       },
       "website": "https://matialee.com/",
       "bio": "i like movies :)"
@@ -40,10 +40,10 @@
       "id": 4,
       "fullName": "Eric Martin",
       "year": 2028,
-      "skills": {
-        "skill1": "Full Stack",
-        "skill2": "Product",
-        "skill3": "IDK Yet!"
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "Product",
+        "interest_3": "IDK Yet!"
       },
       "website": "https://ericm.ca/",
       "bio": "rewatching modern family"
@@ -52,10 +52,10 @@
       "id": 5,
       "fullName": "Ammielle Wambo Becker",
       "year": 2028,
-      "skills": {
-        "skill1": "Data",
-        "skill2": "Product",
-        "skill3": "AI/ML"
+      "interests": {
+        "interest_1": "Data",
+        "interest_2": "Product",
+        "interest_3": "AI/ML"
       },
       "website": "https://www.ammiellewb.com/",
       "bio": "vroom vroom"

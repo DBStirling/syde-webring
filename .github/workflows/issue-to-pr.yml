@@ -60,9 +60,9 @@ jobs:
             const yearStr  = grab('Year (YYYY)');
             let website  = grab('Website URL');
             core.info('Website grab: ' + website);
-            const skill1   = grab('Primary skill');
-            const skill2   = grab('Secondary skill');
-            const skill3   = grab('Tertiary skill');
+            const interest_1   = grab('Primary interest');
+            const interest_2   = grab('Secondary interest');
+            const interest_3   = grab('Tertiary interest');
             const bio      = grab('Bio (optional)');
 
             // Validate inputs
@@ -77,7 +77,7 @@ jobs:
               core.warning('Website is missing or not formatted correctly.');
             }
 
-            const allowedSkills = [
+            const allowedInterests = [
               'UX/UI','UXR','Graphic','Brand',
               'Frontend','Backend','Full Stack','AI/ML','Quant','QA','Game Dev','SRE',
               'Product','Project','Program',
@@ -86,12 +86,12 @@ jobs:
               'Data','Business','VC','IDK Yet!','Other'
             ];
 
-            const skills = [skill1, skill2, skill3];
-            if (skills.some(s => !allowedSkills.includes(s))) {
-              errors.push('Skills must be chosen from the dropdown options.');
+            const interests = [interest_1, interest_2, interest_3];
+            if (interests.some(s => !allowedInterests.includes(s))) {
+              errors.push('Interests must be chosen from the dropdown options.');
             }
-            if (new Set(skills).size !== 3) {
-              errors.push('Skills must be unique.');
+            if (new Set(interests).size !== 3) {
+              errors.push('Interests must be unique.');
             }
 
             if (errors.length) {
@@ -127,7 +127,7 @@ jobs:
               id: nextId,
               fullName,
               year,
-              skills: { skill1, skill2, skill3 },
+              interests: { interest_1, interest_2, interest_3 },
               website,
               bio: bio || ''
             };
