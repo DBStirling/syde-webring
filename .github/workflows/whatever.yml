@@ -144,25 +144,17 @@ jobs:
           git add public/data.json
           git commit -m "feat: add ${{ github.event.inputs.fullName }} (${{ github.event.inputs.year }}) [id ${{ steps.append.outputs.next_id }}]"
           git push origin "$BRANCH_NAME"
-
-      - name: Prepare PR body
-        run: |
-          cat > PR_BODY.md << 'EOF'
-          Auto-generated from manual workflow_dispatch.
-
-          **New node:**
-          ```json
-          ${NEW_NODE}
-          ```
-          EOF
-        env:
-          NEW_NODE: ${{ steps.append.outputs.new_node_json }}
-
       - name: Create Pull Request
+      
         uses: peter-evans/create-pull-request@v6
         with:
           title: "Add ${{ github.event.inputs.fullName }} (${{ github.event.inputs.year }})"
-          body-path: PR_BODY.md
+          body: |
+            Auto-generated from manual workflow_dispatch.
+
+            **New node:**
+            ```json
+            ${{ steps.append.outputs.new_node_json }}
+            ```
           base: main
-          branch: ${{ env.BRANCH_NAME }}
-          commit-message: "feat: add ${{ github.event.inputs.fullName }} (${{ github.event.inputs.year }})"
+          head: ${{ env.BRANCH_NAME }}
