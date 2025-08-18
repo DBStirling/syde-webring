@@ -166,4 +166,3 @@ jobs:
           base: main
           branch: ${{ env.BRANCH_NAME }}
           commit-message: "feat: add ${{ github.event.inputs.fullName }} (${{ github.event.inputs.year }})"
-          labels: webring
