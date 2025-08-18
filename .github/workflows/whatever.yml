@@ -73,21 +73,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup git
-        run: |
-          git config --global user.name "webring-bot"
-          git config --global user.email "webring-bot@users.noreply.github.com"
-
-      - name: Create branch
-        id: create_branch
-        run: |
-          FULL_NAME="${{ github.event.inputs.fullName }}"
-          # slugify: lowercase, non-alnum -> '-', trim leading/trailing '-'
-          SLUG=$(printf "%s" "$FULL_NAME" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+|-+$//g')
-          BRANCH_NAME="add/${SLUG}-${{ github.run_id }}"
-          echo "BRANCH_NAME=$BRANCH_NAME" >> "$GITHUB_ENV"
-          git checkout -b "$BRANCH_NAME"
-
       - name: Validate data file exists
         run: |
           if [ ! -f public/data.json ]; then
@@ -97,6 +82,7 @@ jobs:
 
       - name: Append node to public/data.json
         id: append
+        shell: bash
         run: |
           set -euo pipefail
 
@@ -111,14 +97,15 @@ jobs:
           # Compute next id = max(tonumber(id)) + 1 (handles string ids too)
           NEXT_ID="$(jq -r '([.nodes[].id | tonumber] | (max? // 0)) + 1' public/data.json)"
 
-          # Optional: sanity-check values
+          # Guard that NEXT_ID is numeric
           case "$NEXT_ID" in (''|*[!0-9]*) echo "Bad NEXT_ID: $NEXT_ID"; exit 1;; esac
-          # If YEAR must be numeric, enforce it; otherwise, coerce inside jq with try/catch
-          if ! printf '%s' "$YEAR" | grep -Eq '^[0-9]{4}$'; then
-            echo "Warning: YEAR \"$YEAR\" is not a 4-digit number; will set year=null in JSON."
+
+          # Warn if YEAR isn't 4 digits; we'll coerce to null
+          if ! printf '%s\n' "$YEAR" | grep -Eq '^[0-9]{4}$'; then
+            echo "Warning: YEAR \"$YEAR\" is not a 4-digit number; setting year=null in JSON."
           fi
 
-          # Build new node JSON (pass all args as strings; cast inside jq)
+          # Build new node JSON (cast inside jq)
           NEW_NODE="$(jq -n \
             --arg id "$NEXT_ID" \
             --arg fullName "$FULL_NAME" \
@@ -143,7 +130,7 @@ jobs:
           jq --argjson newNode "$NEW_NODE" '.nodes += [$newNode]' public/data.json > "$TMP"
           mv "$TMP" public/data.json
 
-          # Outputs for later steps
+          # Expose outputs for later steps
           {
             echo "new_node_json<<EOF"
             echo "$NEW_NODE"
@@ -151,8 +138,9 @@ jobs:
             echo "next_id=$NEXT_ID"
           } >> "$GITHUB_OUTPUT"
 
-          # Debug (optional)
+          # Optional debug: show last node
           jq -r '.nodes[-1]' public/data.json
+
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v6
@@ -167,4 +155,6 @@ jobs:
             ${{ steps.append.outputs.new_node_json }}
             ```
           base: main
-          branch: ${{ env.BRANCH_NAME }}  # <-- use 'branch', not 'head'
+          # Let the action create & push this branch; it doesn't need to exist beforehand.
+          branch: add/node-${{ steps.append.outputs.next_id }}-${{ github.run_id }}
+          delete-branch: true
