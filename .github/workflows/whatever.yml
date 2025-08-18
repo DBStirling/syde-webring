@@ -76,22 +76,27 @@ jobs:
       - name: Setup git
         run: |
           git config --global user.name "webring-bot"
-          git config --global user.email "
-        
+          git config --global user.email "webring-bot@users.noreply.github.com"
+
       - name: Create branch
+        id: create_branch
         run: |
-          BRANCH_NAME="add/${{ github.event.inputs.fullName.toLowerCase().replace(/[^a-z0-9]+/g, '-') }}-${{ github.run_id }}"
+          FULL_NAME="${{ github.event.inputs.fullName }}"
+          # slugify: lowercase, non-alnum -> '-', trim leading/trailing '-'
+          SLUG=$(printf "%s" "$FULL_NAME" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+|-+$//g')
+          BRANCH_NAME="add/${SLUG}-${{ github.run_id }}"
+          echo "BRANCH_NAME=$BRANCH_NAME" >> "$GITHUB_ENV"
           git checkout -b "$BRANCH_NAME"
-      
-      - name: Fetch public/data.json
+
+      - name: Validate data file exists
         run: |
           if [ ! -f public/data.json ]; then
             echo "Data file not found at public/data.json"
             exit 1
           fi
-          jq '.nodes' public/data.json > data.json
-      
-      - name: Append to data.json
+
+      - name: Append node to public/data.json
+        id: append
         run: |
           FULL_NAME="${{ github.event.inputs.fullName }}"
           YEAR="${{ github.event.inputs.year }}"
@@ -101,143 +106,64 @@ jobs:
           SKILL3="${{ github.event.inputs.skill3 }}"
           BIO="${{ github.event.inputs.bio }}"
 
-          NEXT_ID=$(jq '.nodes | length' data.json)
-          NEW_NODE=$(jq -n --arg id "$NEXT_ID" \
-                          --arg fullName "$FULL_NAME" \
-                          --arg year "$YEAR" \
-                          --arg website "$WEBSITE" \
-                          --arg skill1 "$SKILL1" \
-                          --arg skill2 "$SKILL2" \
-                          --arg skill3 "$SKILL3" \
-                          --arg bio "$BIO" \
-                          '{
-                            id: $id,
-                            fullName: $fullName,
-                            year: ($year | tonumber),
-                            website: $website,
-                            skills: {
-                              skill1: $skill1,
-                              skill2: $skill2,
-                              skill3: $skill3
-                            },
-                            bio: $bio
-                          }')
+          # Compute next id = (max existing id) + 1, or 1 if none
+          NEXT_ID=$(jq '[.nodes[].id] | (max? // 0) + 1' public/data.json)
 
-          jq --argjson newNode "$NEW_NODE" '.nodes += [$newNode]' data.json > updated_data.json
-          mv updated_data.json data.json
+          # Build new node JSON
+          NEW_NODE=$(jq -n \
+            --argjson id "$NEXT_ID" \
+            --arg fullName "$FULL_NAME" \
+            --arg year "$YEAR" \
+            --arg website "$WEBSITE" \
+            --arg skill1 "$SKILL1" \
+            --arg skill2 "$SKILL2" \
+            --arg skill3 "$SKILL3" \
+            --arg bio "${BIO:-}" \
+            '{
+              id: $id,
+              fullName: $fullName,
+              year: ($year|tonumber),
+              website: ($website|tostring),
+              skills: { skill1: $skill1, skill2: $skill2, skill3: $skill3 },
+              bio: $bio
+            }')
+
+          # Append to public/data.json (preserving other keys like links, etc.)
+          TMP=$(mktemp)
+          jq --argjson newNode "$NEW_NODE" '.nodes += [$newNode]' public/data.json > "$TMP"
+          mv "$TMP" public/data.json
+
+          # Expose for later steps
+          echo "new_node_json<<EOF" >> $GITHUB_OUTPUT
+          echo "$NEW_NODE" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "next_id=$NEXT_ID" >> $GITHUB_OUTPUT
+
       - name: Commit and push changes
         run: |
-          git add data.json
-          git commit -m "feat: add ${{ github.event.inputs.fullName }} (${YEAR})"
+          git add public/data.json
+          git commit -m "feat: add ${{ github.event.inputs.fullName }} (${{ github.event.inputs.year }}) [id ${{ steps.append.outputs.next_id }}]"
           git push origin "$BRANCH_NAME"
-          echo "Branch $BRANCH_NAME created and changes pushed."
+
+      - name: Prepare PR body
+        run: |
+          cat > PR_BODY.md << 'EOF'
+          Auto-generated from manual workflow_dispatch.
+
+          **New node:**
+          ```json
+          ${NEW_NODE}
+          ```
+          EOF
+        env:
+          NEW_NODE: ${{ steps.append.outputs.new_node_json }}
+
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v6
         with:
-          title: "Add ${{ github.event.inputs.fullName }} (${YEAR})"
-          body: |
-            Auto-generated from manual workflow_dispatch.
-            
-            ```json
-            ${{ toJson(steps.append.outputs.newNode) }}
-            ```
+          title: "Add ${{ github.event.inputs.fullName }} (${{ github.event.inputs.year }})"
+          body-path: PR_BODY.md
           base: main
-          head: ${{ github.head_ref }}
-          commit-message: "feat: add ${{ github.event.inputs.fullName }} (${YEAR})"
+          branch: ${{ env.BRANCH_NAME }}
+          commit-message: "feat: add ${{ github.event.inputs.fullName }} (${{ github.event.inputs.year }})"
           labels: webring
-
-
-      # - name: Setup Node.js
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 20
-
-      # - name: Append node and open PR
-      #   uses: actions/github-script@v7
-      #   with:
-      #     script: |
-      #       const fs = require('fs');
-      #       const path = require('path');
-
-      #       const DATA_PATH = 'public/data.json';
-      #       const BASE_BRANCH = 'main';
-
-      #       const {
-      #         fullName,
-      #         year,
-      #         website,
-      #         skill1,
-      #         skill2,
-      #         skill3,
-      #         bio
-      #       } = inputs;
-
-      #       const dataPath = path.join(process.cwd(), DATA_PATH);
-      #       const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-
-      #       const nextId = data.nodes.length
-      #         ? Math.max(...data.nodes.map(n => Number(n.id) || 0)) + 1
-      #         : 1;
-
-      #       const newNode = {
-      #         id: nextId,
-      #         fullName,
-      #         year: parseInt(year, 10),
-      #         website: website.trim(),
-      #         skills: { skill1, skill2, skill3 },
-      #         bio: bio || ''
-      #       };
-
-      #       data.nodes.push(newNode);
-
-      #       const updated = JSON.stringify(data, null, 2) + '\n';
-      #       fs.writeFileSync(dataPath, updated);
-
-      #       const branch = `add/${fullName.toLowerCase().replace(/[^a-z0-9]+/g,'-')}-${Date.now()}`;
-
-      #       const { data: base } = await github.rest.repos.getBranch({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         branch: BASE_BRANCH
-      #       });
-
-      #       await github.rest.git.createRef({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         ref: `refs/heads/${branch}`,
-      #         sha: base.commit.sha
-      #       });
-
-      #       const { data: fileData } = await github.rest.repos.getContent({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         path: DATA_PATH,
-      #         ref: BASE_BRANCH
-      #       });
-
-      #       await github.rest.repos.createOrUpdateFileContents({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         path: DATA_PATH,
-      #         message: `feat: add ${fullName} to webring`,
-      #         content: Buffer.from(updated, 'utf8').toString('base64'),
-      #         branch,
-      #         sha: Array.isArray(fileData) ? undefined : fileData.sha
-      #       });
-
-      #       const pr = await github.rest.pulls.create({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         head: branch,
-      #         base: BASE_BRANCH,
-      #         title: `Add ${fullName} (${year})`,
-      #         body: [
-      #           'Auto-generated from manual workflow_dispatch.',
-      #           '',
-      #           '```json',
-      #           JSON.stringify(newNode, null, 2),
-      #           '```'
-      #         ].join('\n')
-      #       });
-
-      #       console.log(`✅ Pull Request #${pr.data.number} created: ${pr.data.html_url}`);
