@@ -71,6 +71,18 @@
       },
       "website": "https://deekshuk.netlify.app/",
       "bio": "_No response_"
+    },
+    {
+      "id": 7,
+      "fullName": "Leanne Kim",
+      "year": 2028,
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "Frontend",
+        "interest_3": "Program"
+      },
+      "website": "(must start with https://)\n\nhttps://sooyeunleanne.github.io/",
+      "bio": "_No response_"
     }
   ],
   "links": []
