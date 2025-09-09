@@ -17,21 +17,12 @@ You don’t need to edit code or JSON files at all! 🎉
 
 ### Step-by-step guide
 
-1. **Go to this repo** → [syde-webring](https://github.com/DBStirling/syde-webring)  
+1. Click **Issues** in the top navbar
+   
+2. Click the green **New issue** button (top right)
+   
+3. Fill out the form with your details
+   
+4. Scroll to the bottom and click **Create**
 
-2. At the top of the page, click the **Actions** tab (in the top navigation bar).  
-
-3. On the left navigation side, click **Manual Add Node**.  
-
-4. On the right side, click the **Run workflow** button.  
-
-5. A small form will appear. **Fill in your details**:  
-   - **Full name** (e.g., `Jane Doe`)  
-   - **Year** (e.g., `2027`)  
-   - **Up to 3 interests** (copy-paste directly from the list below — spelling must match exactly)  
-   - **Website link** (e.g., `https://janedoe.com/`)  
-   - **Short bio** (1–2 sentences about you)  
-
-6. When you’re done, click the green **Run workflow** button at the bottom of the form.  
-
-7. 🎉 Done! Your profile will be automatically added to the webring.  
+5. 🎉 Done! Your profile will be automatically added to the webring.  
