@@ -74,6 +74,18 @@
     },
     {
       "id": 7,
+      "fullName": "Leanne Kim",
+      "year": 2028,
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "Frontend",
+        "interest_3": "Program"
+      },
+      "website": "https://sooyeunleanne.github.io/",
+      "bio": "_No response_"
+    },
+    {
+      "id": 8,
       "fullName": "Mona Afshar",
       "year": 2028,
       "interests": {
