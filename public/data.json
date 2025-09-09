@@ -95,6 +95,18 @@
       },
       "website": "https://www.monafshar.me/",
       "bio": "matcha matcha matcha"
+    },
+    {
+      "id": 9,
+      "fullName": "Abeer Das",
+      "year": 2028,
+      "interests": {
+        "interest_1": "Product",
+        "interest_2": "Full Stack",
+        "interest_3": "AI/ML"
+      },
+      "website": "(must start with https://)\n\nhttps://www.abeerkdas.me/",
+      "bio": "i like string instruments"
     }
   ],
   "links": []
