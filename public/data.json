@@ -59,6 +59,18 @@
       },
       "website": "https://www.ammiellewb.com/",
       "bio": "vroom vroom"
+    },
+    {
+      "id": 6,
+      "fullName": "Deekshu Kannan",
+      "year": 2028,
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "Backend",
+        "interest_3": "AI/ML"
+      },
+      "website": "(must start with https://)\n\nhttps://deekshuk.netlify.app/",
+      "bio": "_No response_"
     }
   ],
   "links": []
