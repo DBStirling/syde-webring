@@ -299,14 +299,24 @@ function App() {
           onNodeClick={handleNodeClick}
         
         // link styling
-          linkWidth={0.25}
-          linkOpacity={1}
+          linkWidth={0.23}
           linkColor={(link) => {
-            if (link.value ===3) return '#868686';
-            if (link.value ===2) return '#555555';
-            if (link.value ===1) return '#313131';
-            return '#222222'; // fallback color for unlinked
-          }} // fixed color for all links
+            if (link.value === 3) return '#999';
+            if (link.value === 2) return '#444';
+            if (link.value === 1) return 'rgba(255, 0, 0, 0.0)';
+            return '#222222';
+          }}
+          linkCanvasObject={(link, ctx) => {
+            ctx.globalCompositeOperation = 'screen'; // try 'multiply', 'overlay', etc.
+            ctx.strokeStyle = link.color || '#222';
+            ctx.lineWidth = 0.23;
+            ctx.beginPath();
+            ctx.moveTo(link.source.x, link.source.y);
+            ctx.lineTo(link.target.x, link.target.y);
+            ctx.stroke();
+            ctx.globalCompositeOperation = 'source-over'; // reset for other draws
+          }}
+          linkCanvasObjectMode={() => 'after'} // ensures it runs after default link drawing
 
           // linkOpacity={link => {
           //     console.log('I am being called');
