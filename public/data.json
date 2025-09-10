@@ -107,6 +107,18 @@
       },
       "website": "https://www.abeerkdas.me/",
       "bio": "i like string instruments"
+    },
+    {
+      "id": 10,
+      "fullName": "Stephen Ni",
+      "year": 2028,
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "AI/ML",
+        "interest_3": "VC"
+      },
+      "website": "(must start with https://)\n\nhttps://www.stephenni.com/",
+      "bio": "hmu if you wanna play minecraft or chess!"
     }
   ],
   "links": []
