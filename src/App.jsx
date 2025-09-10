@@ -238,7 +238,7 @@ function App() {
         visible={filtersVisible}
       />
       {listView ? (
-        <div className="lg:mx-auto mt-28 w-full max-w-full lg:max-w-[420px] lg:mt-12 lg:py-6 overflow-y-auto flex flex-col items-center max-h-[65vh] lg:min-h-screen overflow-y-auto">
+        <div className="lg:mx-auto mt-28 w-full max-w-full lg:max-w-[420px] lg:mt-12 lg:py-6 overflow-y-auto flex flex-col items-center max-h-[65vh] lg:min-h-screen overflow-y-auto verflow-auto [scrollbar-width:none] [-ms-overflow-style:none]">
           {filteredGraphData.nodes.map((node) => (
             <div
               key={node.id}
