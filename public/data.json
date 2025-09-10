@@ -107,6 +107,18 @@
       },
       "website": "https://www.abeerkdas.me/",
       "bio": "i like string instruments"
+    },
+    {
+      "id": 10,
+      "fullName": "Kenny Na",
+      "year": 2028,
+      "interests": {
+        "interest_1": "Robotics",
+        "interest_2": "AI/ML",
+        "interest_3": "Materials"
+      },
+      "website": "(must start with https://)\n\nhttps://kennyna.com/",
+      "bio": "semiconductors"
     }
   ],
   "links": []
