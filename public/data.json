@@ -107,6 +107,54 @@
       },
       "website": "https://www.abeerkdas.me/",
       "bio": "i like string instruments"
+    },
+    {
+      "id": 10,
+      "fullName": "Spark Mark",
+      "year": 2028,
+      "interests": {
+        "interest_1": "UX/UI",
+        "interest_2": "Product",
+        "interest_3": "Brand"
+      },
+      "website": "https://spark-mark.com",
+      "bio": "I like photography & interdisciplinary design :)"
+    },
+    {
+      "id": 11,
+      "fullName": "Isaac Yu",
+      "year": 2028,
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "Game Dev",
+        "interest_3": "Other"
+      },
+      "website": "https://isaacyu.ca/",
+      "bio": "https://www.youtube.com/watch?v=IxX_QHay02M&list=RDIxX_QHay02M&start_radio=1"
+    },
+    {
+      "id": 12,
+      "fullName": "Stephen Ni",
+      "year": 2028,
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "AI/ML",
+        "interest_3": "VC"
+      },
+      "website": "https://www.stephenni.com/",
+      "bio": "hmu if you wanna play minecraft or chess!"
+    },
+    {
+      "id": 13,
+      "fullName": "Kenny Na",
+      "year": 2028,
+      "interests": {
+        "interest_1": "Robotics",
+        "interest_2": "AI/ML",
+        "interest_3": "Materials"
+      },
+      "website": "https://kennyna.com/",
+      "bio": "semiconductors"
     }
   ],
   "links": []
