@@ -155,6 +155,18 @@
       },
       "website": "https://kennyna.com/",
       "bio": "semiconductors"
+    },
+    {
+      "id": 14,
+      "fullName": "Sahej Sodhi",
+      "year": 2028,
+      "interests": {
+        "interest_1": "Data",
+        "interest_2": "AI/ML",
+        "interest_3": "Full Stack"
+      },
+      "website": "(must start with https://)\n\nhttps://www.sahejsodhi.me/",
+      "bio": "Nature 💐"
     }
   ],
   "links": []
