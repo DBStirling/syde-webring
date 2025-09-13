@@ -58,7 +58,7 @@ jobs:
 
             const fullName = grab('Full name');
             const yearStr  = grab('Year (YYYY)');
-            let website  = grab('Website URL');
+            let website  = grab('Website URL (must start with https://)');
             core.info('Website grab: ' + website);
             const interest_1   = grab('Primary interest');
             const interest_2   = grab('Secondary interest');
