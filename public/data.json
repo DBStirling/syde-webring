@@ -167,6 +167,18 @@
       },
       "website": "https://www.sahejsodhi.me/",
       "bio": "Nature 💐"
+    },
+    {
+      "id": 15,
+      "fullName": "Preston Tom-Ying",
+      "year": 2028,
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "Backend",
+        "interest_3": "AI/ML"
+      },
+      "website": "https://prestonty.com/",
+      "bio": "_No response_"
     }
   ],
   "links": []
