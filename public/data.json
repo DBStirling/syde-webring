@@ -179,6 +179,18 @@
       },
       "website": "https://prestonty.com/",
       "bio": "_No response_"
+    },
+    {
+      "id": 16,
+      "fullName": "Ryan Li",
+      "year": 2030,
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "Frontend",
+        "interest_3": "IDK Yet!"
+      },
+      "website": "https://ryanl.netlify.app/",
+      "bio": "I like to cook"
     }
   ],
   "links": []
