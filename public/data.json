@@ -203,6 +203,18 @@
       },
       "website": "https://leo-zhang.com/",
       "bio": "wait i'm not goated."
+    },
+    {
+      "id": 18,
+      "fullName": "Nicholas Chen",
+      "year": 2029,
+      "interests": {
+        "interest_1": "AI/ML",
+        "interest_2": "Backend",
+        "interest_3": "SRE"
+      },
+      "website": "https://nicholaschen.me/",
+      "bio": "i listen to a lot of music"
     }
   ],
   "links": []
