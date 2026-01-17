@@ -203,6 +203,18 @@
       },
       "website": "https://leo-zhang.com/",
       "bio": "wait i'm not goated."
+    },
+    {
+      "id": 18,
+      "fullName": "Jeremy Su",
+      "year": 2029,
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "UX/UI",
+        "interest_3": "Robotics"
+      },
+      "website": "https://www.jeremysu.ca",
+      "bio": "Newjeans never die"
     }
   ],
   "links": []
