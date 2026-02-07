@@ -215,6 +215,18 @@
       },
       "website": "https://nicholaschen.me/",
       "bio": "i listen to a lot of music"
+    },
+    {
+      "id": 19,
+      "fullName": "Vianney Susanto",
+      "year": 2030,
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "AI/ML",
+        "interest_3": "IDK Yet!"
+      },
+      "website": "https://vianneys.com/",
+      "bio": "professional idiot"
     }
   ],
   "links": []
