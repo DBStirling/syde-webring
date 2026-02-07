@@ -215,6 +215,30 @@
       },
       "website": "https://www.jeremysu.ca",
       "bio": "Newjeans never die"
+    },
+    {
+      "id": 19,
+      "fullName": "Nicholas Chen",
+      "year": 2029,
+      "interests": {
+        "interest_1": "AI/ML",
+        "interest_2": "Backend",
+        "interest_3": "SRE"
+      },
+      "website": "https://nicholaschen.me/",
+      "bio": "i listen to a lot of music"
+    },
+    {
+      "id": 20,
+      "fullName": "Vianney Susanto",
+      "year": 2030,
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "AI/ML",
+        "interest_3": "IDK Yet!"
+      },
+      "website": "https://vianneys.com/",
+      "bio": "professional idiot"
     }
   ],
   "links": []
