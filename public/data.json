@@ -206,6 +206,18 @@
     },
     {
       "id": 18,
+      "fullName": "Nicholas Chen",
+      "year": 2029,
+      "interests": {
+        "interest_1": "AI/ML",
+        "interest_2": "Backend",
+        "interest_3": "SRE"
+      },
+      "website": "https://nicholaschen.me/",
+      "bio": "i listen to a lot of music"
+    },
+    {
+      "id": 19,
       "fullName": "Vianney Susanto",
       "year": 2030,
       "interests": {
