@@ -206,6 +206,18 @@
     },
     {
       "id": 18,
+      "fullName": "Jeremy Su",
+      "year": 2029,
+      "interests": {
+        "interest_1": "Full Stack",
+        "interest_2": "UX/UI",
+        "interest_3": "Robotics"
+      },
+      "website": "https://www.jeremysu.ca",
+      "bio": "Newjeans never die"
+    },
+    {
+      "id": 19,
       "fullName": "Nicholas Chen",
       "year": 2029,
       "interests": {
@@ -217,7 +229,7 @@
       "bio": "i listen to a lot of music"
     },
     {
-      "id": 19,
+      "id": 20,
       "fullName": "Vianney Susanto",
       "year": 2030,
       "interests": {
