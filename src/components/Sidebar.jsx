@@ -1,22 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import getNodeColor from '../utils/getNodeColor';
 
 const Sidebar = ({ node, onClose }) => {
   const [visible, setVisible] = useState(false);
 
+  const handleClose = useCallback(() => {
+    setVisible(false);
+    setTimeout(() => {
+      onClose();
+    }, 500); // Match transition duration
+  }, [onClose]);
+
   useEffect(() => {
-    setVisible(true);
+    // Small delay to ensure initial off-screen state is rendered before transition
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setVisible(true);
+      });
+    });
 
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
-        setVisible(false);
-        setTimeout(onClose, 400); // same delay as close button
+        handleClose();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  }, [handleClose]);
 
   if (!node) return null;
 
@@ -26,7 +37,7 @@ const Sidebar = ({ node, onClose }) => {
   return (
     <div
       className={`fixed top-0 right-0 w-full lg:w-[40vw] lg:max-w-[600px] lg:min-w-[400px] h-screen z-51 lg:z-51 bg-[#161616] border-l border-[#333333] overflow-y-auto
-        transform transition-transform duration-500 ease-in-out overflow-x-hidden
+        transform transition-transform duration-500 ease-in-out overflow-x-hidden will-change-transform
         ${visible ? 'translate-x-0' : 'translate-x-full'}`}
     >
       {/* Year in top-right corner */}
@@ -89,11 +100,8 @@ const Sidebar = ({ node, onClose }) => {
       </div>
 
       <button
-        onClick={() => {
-          setVisible(false);
-          setTimeout(onClose, 400);
-        }}
-        className="absolute top-4 right-4 text-[#868686] hover:text-white text-lg font-light leading-none"
+        onClick={handleClose}
+        className="absolute top-4 right-4 text-[#868686] hover:text-white text-lg font-light leading-none transition-colors duration-200"
         aria-label="Close"
       >
         &times;

@@ -15,6 +15,7 @@ import * as THREE from 'three';
 
 function App() {
     const fgRef = useRef();
+    const isInitialMount = useRef(true);
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
     const [selectedNode, setSelectedNode] = useState(null);
     const [hoveredNode, setHoveredNode] = useState(null);
@@ -25,6 +26,9 @@ function App() {
     const [interestFilters, setInterestFilters] = useState([]);
     const [filtersVisible, setFiltersVisible] = useState(false);
     const [listView, setListView] = useState(false);
+    const [listViewAnimating, setListViewAnimating] = useState(false);
+    const [listViewVisible, setListViewVisible] = useState(false);
+    const [networkViewOpacity, setNetworkViewOpacity] = useState(100);
 
     // const handleClearLocalStorage = () => {
     //   const confirmed = window.confirm("Are you sure you want to clear all nodes? This cannot be undone.");
@@ -86,6 +90,42 @@ function App() {
 
       setFilteredGraphData({ nodes, links });
     }, [searchQuery, interestFilters, graphData]);
+
+    // Handle list view and network view animation coordination
+    useEffect(() => {
+      // Skip animation on initial mount
+      if (isInitialMount.current) {
+        isInitialMount.current = false;
+        return;
+      }
+
+      if (listView) {
+        // Switching to list view: fade out network first, then show list
+        setNetworkViewOpacity(0);
+        setTimeout(() => {
+          setListViewVisible(true);
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              setListViewAnimating(true);
+            });
+          });
+        }, 250); // Wait for network fade out
+      } else {
+        // Switching to network view: hide list first, then fade in network
+        setListViewAnimating(false);
+        // Set network opacity to 0 first (it will be visible when listView becomes false)
+        setNetworkViewOpacity(0);
+        setTimeout(() => {
+          setListViewVisible(false);
+          // Fade in network after list is hidden
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              setNetworkViewOpacity(100);
+            });
+          });
+        }, 250); // Match transition duration
+      }
+    }, [listView]);
 
 
 
@@ -237,8 +277,12 @@ function App() {
         setInterestFilters={setInterestFilters} 
         visible={filtersVisible}
       />
-      {listView ? (
-        <div className="lg:mx-auto mt-28 w-full max-w-full lg:max-w-[420px] lg:mt-12 lg:py-6 overflow-y-auto flex flex-col items-center max-h-[65vh] lg:min-h-screen overflow-y-auto verflow-auto [scrollbar-width:none] [-ms-overflow-style:none]">
+      {listViewVisible && (
+        <div 
+          className={`lg:mx-auto mt-28 w-full max-w-full lg:max-w-[420px] lg:mt-12 lg:py-6 overflow-y-auto flex flex-col items-center max-h-[65vh] lg:min-h-screen overflow-y-auto verflow-auto [scrollbar-width:none] [-ms-overflow-style:none]
+            transform transition-all duration-[250ms] ease-in-out will-change-transform
+            ${listViewAnimating ? 'translate-y-0 opacity-100' : '-translate-y-20 opacity-0'}`}
+        >
           {filteredGraphData.nodes.map((node) => (
             <div
               key={node.id}
@@ -249,8 +293,12 @@ function App() {
             </div>
           ))}
         </div>
-      ) : (
-      <div className="w-screen h-screen">
+      )}
+      {!listView && (
+      <div 
+        className="w-screen h-screen transition-opacity duration-[250ms] ease-in-out"
+        style={{ opacity: `${networkViewOpacity}%` }}
+      >
         <ForceGraph3D
         // important stuff
           showNavInfo={false}
