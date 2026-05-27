@@ -251,6 +251,18 @@
       },
       "website": "https://sprsh.ca",
       "bio": "_No response_"
+    },
+    {
+      "id": 22,
+      "fullName": "Su Nguyen",
+      "year": 2029,
+      "interests": {
+        "interest_1": "AI/ML",
+        "interest_2": "Full Stack",
+        "interest_3": "Game Dev"
+      },
+      "website": "https://sunguyen.vercel.app/",
+      "bio": "_No response_"
     }
   ],
   "links": []
